@@ -123,10 +123,11 @@ class Admin(User):
 class ProductsForSale(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), default='iPhone 13', nullable=False)
-    cost = db.Column(db.Integer, default=0, nullable=False)
-    currency = db.Column(db.String(20), default='KES', nullable=False)
-    image = db.Column(db.String(64), default='static/images/vendor/uploads', nullable=False)
+    price = db.Column(db.Integer, default=0, nullable=False)
+    currency = db.Column(db.String(20), default='KES', nullable=False)    
     description = db.Column(db.String(64), default='iPhone 13', nullable=False)
+    quantity = db.Column(db.Integer, default=0, nullable=False)
+    image = db.Column(db.String(64), default='static/images/vendor/uploads', nullable=False)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', ondelete='CASCADE'))
 
 
