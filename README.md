@@ -30,7 +30,7 @@ when an unknown printer took a galley of type and scrambled it to make a type sp
 
 | Db Schema Design |	UI Design	| Deployment |	Contributors |	Tests |
 | ---------------- | -------------- | ---------- | ------------- | ------ |
-|     drawSQL      |	Figma       |	Render   |	      GitHub |	Tests |
+|     [drawSQL](https://drawsql.app/teams/gitau-harrison/diagrams/sample-ecommerce-app)      |	[Figma](https://www.figma.com/proto/3R0RquHDmlfeN9m954BjF4/sample-eCommerce-app?node-id=2%3A616&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=1%3A2)       |	Render   |	      [GitHub](https://github.com/GitauHarrison/sample-ecommerce-app-using-flask/graphs/contributors) |	[Tests](test_web_app.py) |
 
 ## Application Details
 
