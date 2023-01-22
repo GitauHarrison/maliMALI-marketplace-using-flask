@@ -73,10 +73,10 @@
 
                     <ul class="list-unstyled CTAs">
                         <li>
-                            <a href="#" class="download">Delete Account</a>
+                            <a href="#" class="download not-active">Delete Account</a>
                         </li>
                         <li>
-                            <a href="#" class="article">2FA</a>
+                            <a href="#" class="article not-active">2FA</a>
                         </li>
                     </ul>
                 </nav>
@@ -101,7 +101,7 @@
                                         <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">{{ current_user.username }}</a>
+                                        <a class="nav-link not-active" href="#">{{ current_user.username }}</a>
                                     </li>
                                 </ul>
                             </div>
