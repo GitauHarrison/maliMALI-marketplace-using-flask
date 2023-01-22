@@ -236,3 +236,68 @@ a:visited {
     color: white;
     font-size: 25px;
 }
+
+
+/* ---------------------------------------------------
+    ADD TO CART
+----------------------------------------------------- */
+  
+.product-form .form-group {
+    position: relative;
+}
+
+.product-form .form-group button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+@media (max-width: 991.98px) {
+    .product-form .form-group button {
+        position: static;
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
+
+.product-form input {
+    padding-top: 1.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    border: none;
+    background: #fff;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-form input::-moz-placeholder {
+    font-weight: 400;
+    color: #aaa;
+}
+
+.product-form input::-webkit-input-placeholder {
+    font-weight: 400;
+    color: #aaa;
+}
+
+.product-form input:-ms-input-placeholder {
+    font-weight: 400;
+    color: #aaa;
+}
+
+.product-form input:focus {
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-form label {
+    font-weight: 700;
+    color: #8f8f8f;
+    position: absolute;
+    top: 0.5rem;
+    left: 1.5rem;
+}

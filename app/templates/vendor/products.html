@@ -27,9 +27,13 @@
                                         <p class="small text-muted ">{{ product.description }}</p>
                                         <p>{{ product.currency }}: {{ product.price }}</p>
                                         <!-- Add to cart form-->
-                                        <div class="my-form">
-                                            <p>add to cart form will go here</p>
-                                        </div>
+                                        <form action="#" class="product-form">
+                                            <div class="form-group">
+                                              <label>Quantity</label>
+                                              <input type="number" name="number" placeholder="1" class="form-control">
+                                              <button type="submit" class="btn">Add</button>
+                                            </div>
+                                        </form>
                                         <!-- End -->
 
                                         <!-- Take action -->
@@ -45,7 +49,7 @@
                                             </p>
                                         </div>
                                         <!-- End -->
-                                        
+
                                     </div>
                                 </div>
                             </div>
