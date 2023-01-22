@@ -3,9 +3,21 @@
 {% if current_user.is_authenticated %}
     {% block current_user_content %}
         <h1>{{ title }}</h1>
-        <p>
-            <a href="{{ url_for('dashboard') }}">Return to the home page</a>
-        </p>
+        {% if current_user.type == 'admin' %}
+            <p>
+                <a href="{{ url_for('dashboard_admin') }}">Return to the dashboard</a>.
+            </p>
+        {% endif %}
+        {% if current_user.type == 'vendor' %}
+            <p>
+                <a href="{{ url_for('dashboard_vendor') }}">Return to the dashboard</a>.
+            </p>
+        {% endif %}
+        {% if current_user.type == 'customer' %}
+            <p>
+                <a href="{{ url_for('dashboard_customer') }}">Return to the dashboard</a>.
+            </p>
+        {% endif %}
     {% endblock %}
 {% else %}
     {% block app_context %}
@@ -13,7 +25,7 @@
             <div class="col-md-12">
                 <h1>{{ title }}</h1>
                 <p>
-                    <a href="{{ url_for('dashboard') }}">Return to the home page</a>
+                    <a href="{{ url_for('home') }}">Return to the home page</a>.
                 </p>
             </div>  
         </div>
