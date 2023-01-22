@@ -19,7 +19,34 @@
                 </p>
             </div>   
             <div class="col-md-6">
-                <!-- Empty col -->
+                <h1>All Vendors</h1>
+                <!-- All vendors -->
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Avatar</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Date Registered</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vendor in vendors %}
+                                <tr>
+                                    <td> {{ vendor.id }} </td>
+                                    <td> <img src="{{ vendor.avatar(36) }}" alt=""> </td>
+                                    <td> {{ vendor.username }} </td>
+                                    <td> {{ vendor.email }} </td>
+                                    <td> {{ vendor.phone }} </td>
+                                    <td> {{ moment(vendor.registered_at).format('LLL') }} </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>     
         </div>
     {% endblock %}
