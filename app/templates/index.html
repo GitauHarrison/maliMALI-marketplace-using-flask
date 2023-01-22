@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+    <div class="row">
+        <div class="col-md-12">
+              <!-- products -->
+            <h2 class="font-weight-bold mb-2">{{ title }}</h2>
+            <p class="text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+
+            <div class="row pb-5 mb-4">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <!-- Card-->
+                <div class="card rounded shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <img src="https://picsum.photos/seed/picsum/200/300" alt="" class="img-fluid d-block mx-auto mb-3">
+                        <h5> <a href="#" class="text-dark">Awesome product</a></h5>
+                        <p class="small text-muted ">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>KES: 500</p>
+                        <!-- Add to cart form-->
+                        <div class="my-form">
+                            <p>{{ wtf.quick_form(form) }}</p>
+                        </div>
+                        <!-- End -->
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <!-- Card-->
+                <div class="card rounded shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <img src="https://picsum.photos/id/237/200/300" alt="" class="img-fluid d-block mx-auto mb-3">
+                        <h5> <a href="#" class="text-dark">Awesome product</a></h5>
+                        <p class="small text-muted ">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>KES: 500</p>
+                        <!-- Add to cart form-->
+                        <div class="my-form">
+                            <p>{{ wtf.quick_form(form) }}</p>
+                        </div>
+                        <!-- End -->
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <!-- Card-->
+                <div class="card rounded shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <img src="https://picsum.photos/200/300?grayscale" alt="" class="img-fluid d-block mx-auto mb-3">
+                        <h5> <a href="#" class="text-dark">Awesome product</a></h5>
+                        <p class="small text-muted ">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>KES: 500</p>
+                        <!-- Add to cart form-->
+                        <div class="my-form">
+                            <p>{{ wtf.quick_form(form) }}</p>
+                        </div>
+                        <!-- End -->
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <!-- Card-->
+                <div class="card rounded shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <img src="https://picsum.photos/200/300/?blur" alt="" class="img-fluid d-block mx-auto mb-3">
+                        <h5> <a href="#" class="text-dark">Awesome product</a></h5>
+                        <p class="small text-muted ">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>KES: 500</p>
+                        <!-- Add to cart form-->
+                        <div class="my-form">
+                            <p>{{ wtf.quick_form(form) }}</p>
+                        </div>
+                        <!-- End -->
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+{% endblock %}
