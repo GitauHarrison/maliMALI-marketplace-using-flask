@@ -37,19 +37,39 @@
             <div class="wrapper">
                 <!-- Sidebar  -->
                 <nav id="sidebar">
-                    <div class="sidebar-header">
-                        <h3>Vendor</h3>
-                    </div>
 
-                    <ul class="list-unstyled components">
-                        <p>Dashboard</p>
-                        <li class="active">
-                            <a href="#">Add product</a>
-                        </li>
-                        <li>
-                            <a href="#">All products</a>
-                        </li>
-                    </ul>
+                    <!-- Sidebar seen by vendor -->
+                    {% if current_user.type == 'vendor' %}
+                        <div class="sidebar-header">
+                            <h3>Vendor</h3>
+                        </div>
+
+                        <ul class="list-unstyled components">
+                            <p>Dashboard</p>
+                            <li class="active">
+                                <a href="#">Add product</a>
+                            </li>
+                            <li>
+                                <a href="#">All products</a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                    <!-- End of vendor sidebar -->
+
+                    <!-- Sidebar as seen by admin -->
+                    {% if current_user.type == 'admin' %}
+                        <div class="sidebar-header">
+                            <h3>Admin</h3>
+                        </div>
+
+                        <ul class="list-unstyled components">
+                            <p>Dashboard</p>
+                            <li class="active">
+                                <a href=" {{ url_for('dashboard') }} ">Register Vendor</a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                    <!-- End of admin sidebar -->
 
                     <ul class="list-unstyled CTAs">
                         <li>
@@ -81,7 +101,7 @@
                                         <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">current_user.username</a>
+                                        <a class="nav-link" href="#">{{ current_user.username }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -101,6 +121,9 @@
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Cart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                             </li>
                         </ul>
                     </div>

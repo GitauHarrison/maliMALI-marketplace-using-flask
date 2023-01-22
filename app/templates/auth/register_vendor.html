@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+<!-- Only seen by admin -->
+{% if current_user.type == 'admin' %}
+    {% block current_user_content %}
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Flash message -->
+                {% include '_flash_message.html' %}
+                <!-- End of flash message -->
+    
+                <h1>Vendor Registration</h1>
+    
+                <p>
+                    <div class="my-form">
+                        {{ wtf.quick_form(form) }}
+                    </div>
+                </p>
+            </div>   
+            <div class="col-md-6">
+                <!-- Empty col -->
+            </div>     
+        </div>
+    {% endblock %}
+{% endif %}
+<!-- End of admin -->

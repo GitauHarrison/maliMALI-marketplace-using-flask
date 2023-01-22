@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+<!-- Seen by anonymous user -->
 {% block app_content %}
-<div class="row">
-    <div class="col-md-12 text-center">
-        <!-- Flash message -->
-        {% include '_flash_message.html' %}
-        <!-- End of flash message -->
-            <h1>{{ title }}</h1>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <!-- Flash message -->
+            {% include '_flash_message.html' %}
+            <!-- End of flash message -->
+                <h1>{{ title }}</h1>
+        </div>
     </div>
-</div>
     <div class="row">
         <div class="col-md-4">
             <!-- Emtpy column -->

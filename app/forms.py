@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField, PasswordField, BooleanField, \
 from wtforms.validators import DataRequired, Length, EqualTo, Email, \
     Regexp, ValidationError
 import phonenumbers
+from app.models import User
 
 
 class LoginForm(FlaskForm):
@@ -16,9 +17,12 @@ class LoginForm(FlaskForm):
 
 # Using form inheritance
 
-class User(FlaskForm):
+class UserForm(FlaskForm):
     """General User Data"""
-    username = StringField('Username', validators=[DataRequired(), Length(1, 64)])
+    username = StringField(
+        'Username',
+        validators=[DataRequired(), Length(1, 64)],
+        render_kw={'placeholder': 'johndoe'})
     email = StringField(
         'Email',
         validators=[DataRequired(), Email()],
@@ -32,7 +36,7 @@ class User(FlaskForm):
         Regexp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
                message='Password must be at least 8 characters long and '
                'contain at least one letter and one number.')],
-        render_kw={'placeholder': 'Use: fullstack2023'})
+        render_kw={'placeholder': 'Use: ecommerceapp123'})
     confirm_password = PasswordField(
         'Confirm Password',
         validators=[DataRequired(), EqualTo('password')],
@@ -40,14 +44,14 @@ class User(FlaskForm):
 
     def validate_username(self, username):
         """Check if username already exists"""
-        parent = User.query.filter_by(username=username.data).first()
-        if parent is not None:
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
             raise ValidationError('Please use a different username.')
 
     def validate_email(self, email):
         """Check if email already exists"""
-        parent = User.query.filter_by(email=email.data).first()
-        if parent is not None:
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
             raise ValidationError('Please use a different email address.')
 
     def validate_phone(self, phone):
@@ -59,19 +63,25 @@ class User(FlaskForm):
             raise ValidationError('Invalid phone number.\n\n', exc ) from exc
 
 
-class VendorRegistrationForm(User):
+class VendorRegistrationForm(UserForm):
     """Vendor Registration Form"""
-    shop_name = StringField('Shop Name', validators=[DataRequired(), Length(1, 64)])
+    shop_name = StringField(
+        'Shop Name',
+        validators=[DataRequired(), Length(1, 64)],
+        render_kw={'placeholder': 'eCommerce Shop 1'})
     submit = SubmitField('Register')
 
 
-class CustomerRegistrationForm(User):
+class CustomerRegistrationForm(UserForm):
     """Customer Registration Form"""
-    residence = StringField('Residence', validators=[DataRequired(), Length(1, 64)])
+    residence = StringField(
+        'Residence',
+        validators=[DataRequired(), Length(1, 64)],
+        render_kw={'placeholder': 'Roselyn, Nairobi'})
     submit = SubmitField('Register')
 
 
-class AdminRegistrationForm(User):
+class AdminRegistrationForm(UserForm):
     """Admin Registration Form"""
     department = SelectField(
         'Department',

@@ -6,10 +6,22 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import Admin, Vendor, Customer, User
 
 
-@app.route('/dashboard')
+@app.route('/dashboard/register/vendor')
 @login_required
 def dashboard():
-    return render_template('dashboard.html', title='Dashboard')
+    form = VendorRegistrationForm()
+    if form.validate_on_submit():
+        vendor = Vendor(
+            username=form.username.data,
+            email=form.email.data,
+            phone=form.phone.data,
+            shop_name=form.shop_name.data)
+        vendor.set_password(form.password.data)
+        db.session.add(vendor)
+        db.session.commit()
+        flash('Registered successfully as vendor. Please log in to continue')
+        return redirect(url_for('login'))
+    return render_template('auth/register_vendor.html', title='Dashboard', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -47,24 +59,24 @@ def register_customer():
     return render_template('auth/register.html', title='Register', form=form)
 
 
-@app.route('/register/vendor',methods=['GET', 'POST'])
-@login_required
-def register_vendor():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    form = VendorRegistrationForm()
-    if form.validate_on_submit():
-        vendor = Vendor(
-            username=form.username.data,
-            email=form.email.data,
-            phone=form.phone.data,
-            shop_name=form.shop_name.data)
-        vendor.set_password(form.password.data)
-        db.session.add(vendor)
-        db.session.commit()
-        flash('Registered successfully as vendor. Please log in to continue')
-        return redirect(url_for('login'))
-    return render_template('auth/register.html', title='Register', form=form)
+# @app.route('/register/vendor',methods=['GET', 'POST'])
+# @login_required
+# def register_vendor():
+#     if current_user.is_authenticated:
+#         return redirect(url_for('dashboard'))
+#     form = VendorRegistrationForm()
+#     if form.validate_on_submit():
+#         vendor = Vendor(
+#             username=form.username.data,
+#             email=form.email.data,
+#             phone=form.phone.data,
+#             shop_name=form.shop_name.data)
+#         vendor.set_password(form.password.data)
+#         db.session.add(vendor)
+#         db.session.commit()
+#         flash('Registered successfully as vendor. Please log in to continue')
+#         return redirect(url_for('login'))
+#     return render_template('auth/register.html', title='Register', form=form)
 
 
 @app.route('/register/admin',methods=['GET', 'POST'])
@@ -77,7 +89,7 @@ def register_admin():
             username=form.username.data,
             email=form.email.data,
             phone=form.phone.data,
-            shop_name=form.shop_name.data)
+            department=form.department.data)
         admin.set_password(form.password.data)
         db.session.add(admin)
         db.session.commit()

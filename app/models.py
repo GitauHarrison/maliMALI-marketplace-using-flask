@@ -46,11 +46,11 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    @property
-    def is_active(self):
-        # override UserMixin property which always returns true
-        # return the value of the active column instead
-        return self.active
+    # @property
+    # def is_active(self):
+    #     # override UserMixin property which always returns true
+    #     # return the value of the active column instead
+    #     return self.active
 
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
