@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+<!-- Only seen by admin -->
+{% if current_user.type == 'vendor' %}
+    {% block current_user_content %}
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Flash message -->
+                {% include '_flash_message.html' %}
+                <!-- End of flash message -->
+    
+                <h1>{{ title }}</h1>
+    
+                <div class="row pb-5 mb-4">
+                    {% for product in products %}
+                        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                            <!-- Card-->
+                            <div class="card rounded shadow-sm border-0 mt-4">
+                                <div class="card-body p-4">
+                                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
+                                    <h5> <a href="#" class="text-dark">{{ product.name }}</a></h5>
+                                    <p class="small text-muted ">{{ product.description }}</p>
+                                    <p>{{ product.currency }}: {{ product.price }}</p>
+                                    <!-- Add to cart form-->
+                                    <div class="my-form">
+                                        <p>add to cart form will go here</p>
+                                    </div>
+                                    <!-- End -->
+                                    <div class="mt-4">
+                                        <p>
+                                            <a href="#">Edit</a> | <a href="#">Allow</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>      
+        </div>
+    {% endblock %}
+{% endif %}
+{% if current_user.type != 'vendor' %}
+    <p>You do not have access to this page.</p>
+   {% if current_user.type == 'admin' %}
+    <p>
+        <a href="{{ url_for('dashboard_admin') }}">Return to your dashboard</a>.
+    </p>
+   {% endif %}
+   {% if current_user.type == 'customer' %}
+    <p>
+        <a href="{{ url_for('dashboard_customer') }}">Return to your dashboard</a>.
+    </p>
+   {% endif %}
+{% endif %}
+<!-- End of admin -->

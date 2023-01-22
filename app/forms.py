@@ -90,7 +90,8 @@ class AdminRegistrationForm(UserForm):
             ('Support', 'Support'),
             ('Finance', 'Finance'),
             ('HR', 'HR')
-        ])
+        ],
+        validators=[DataRequired()])
     submit = SubmitField('Register')
 
 
@@ -106,10 +107,10 @@ class ProductsForSaleForm(FlaskForm):
         validators=[DataRequired(), Length(1, 64)],
         render_kw={'placeholder': 'iPhone 13 Pro'})
     price = IntegerField('Price', validators=[DataRequired()])
-    currency = StringField(
+    currency = SelectField(
         'Currency',
-        validators=[DataRequired(), Length(1, 64)],
-        render_kw={'placeholder': 'KES'})
+        choices=[('KES', 'KES')],
+        validators=[DataRequired()])
     description = TextAreaField(
         'Product Description',
         validators=[DataRequired(), Length(1, 64)],
