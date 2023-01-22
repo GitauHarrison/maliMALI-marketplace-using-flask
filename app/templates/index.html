@@ -21,11 +21,15 @@
                                     <p class="small text-muted ">{{ product.description }}</p>
                                     <p>{{ product.currency }}: {{ product.price }}</p>
                                     <!-- Add to cart form-->
-                                    <form action="#" class="product-form">
+                                    <form action="" method="post" novalidate class="product-form">
+                                        {{ form.hidden_tag() }}
                                         <div class="form-group">
-                                          <label>Quantity</label>
-                                          <input type="number" name="number" placeholder="1" class="form-control">
-                                          <button type="submit" class="btn">Add</button>
+                                            <label for="">{{ form.quantity.label }}</label>
+                                            {{ form.quantity(size=32, class_='form-control') }}
+                                            {% for error in form.quantity.errors %}
+                                                <span style="color: red;">{{ error }}</span>
+                                            {% endfor %}
+                                            {{ form.submit(class_='btn') }}
                                         </div>
                                     </form>
                                     <!-- End -->

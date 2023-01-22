@@ -69,11 +69,13 @@ def dashboard_vendor():
 @app.route('/dashboard/vendor/all-products', methods=['GET', 'POST'])
 @login_required
 def dashboard_vendor_all_products():
+    form = AddToCart()
     products = current_user.products_for_sale.all()
     num_products = len(products)
     return render_template(
         'vendor/products.html',
         title='All Products',
+        form=form,
         products=products,
         num_products=num_products)
 

@@ -97,8 +97,11 @@ class AdminRegistrationForm(UserForm):
 
 class AddToCart(FlaskForm):
     """Add items to the cart"""
-    quantity = IntegerField('Quantity', validators=[DataRequired()])
-    add = SubmitField('Add To Cart')
+    quantity = IntegerField(
+        'Quantity',
+        validators=[DataRequired()],
+        render_kw={'placeholder': '1'})
+    submit = SubmitField('Add')
 
 
 class ProductsForSaleForm(FlaskForm):

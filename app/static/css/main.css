@@ -246,7 +246,7 @@ a:visited {
     position: relative;
 }
 
-.product-form .form-group button {
+.product-form .form-group .btn {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -254,10 +254,11 @@ a:visited {
     border-bottom-left-radius: 0;
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
+    background-color: #ebebeb;
 }
 
 @media (max-width: 991.98px) {
-    .product-form .form-group button {
+    .product-form .form-group .btn {
         position: static;
         width: 100%;
         margin-top: 1rem;
@@ -298,6 +299,6 @@ a:visited {
     font-weight: 700;
     color: #8f8f8f;
     position: absolute;
-    top: 0.5rem;
-    left: 1.5rem;
+    top: 0.1rem;
+    left: 0.7rem;
 }
