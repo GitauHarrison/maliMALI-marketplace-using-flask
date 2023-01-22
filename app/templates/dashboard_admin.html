@@ -2,7 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 <!-- Only seen by admin -->
-{% if current_user.type == 'vendor' %}
+{% if current_user.type == 'admin' %}
     {% block current_user_content %}
         <div class="row">
             <div class="col-md-6">
@@ -24,11 +24,13 @@
         </div>
     {% endblock %}
 {% endif %}
-{% if current_user.type != 'vendor' %}
+<!-- End of admin -->
+
+{% if current_user.type != 'admin' %}
     <p>You do not have access to this page.</p>
-   {% if current_user.type == 'admin' %}
+   {% if current_user.type == 'vendor' %}
     <p>
-        <a href="{{ url_for('dashboard_admin') }}">Return to your dashboard</a>.
+        <a href="{{ url_for('dashboard_vendor') }}">Return to your dashboard</a>.
     </p>
    {% endif %}
    {% if current_user.type == 'customer' %}
@@ -37,4 +39,3 @@
     </p>
    {% endif %}
 {% endif %}
-<!-- End of admin -->

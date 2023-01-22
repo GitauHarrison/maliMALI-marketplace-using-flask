@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, \
-    SelectField, IntegerField
+    SelectField, IntegerField, TextAreaField, FileField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, \
     Regexp, ValidationError
 import phonenumbers
@@ -97,3 +97,22 @@ class AddToCart(FlaskForm):
     """Add items to the cart"""
     quantity = IntegerField('Quantity', validators=[DataRequired()])
     add = SubmitField('Add To Cart')
+
+
+class ProductsForSaleForm(FlaskForm):
+    name = StringField(
+        'Product Name',
+        validators=[DataRequired(), Length(1, 64)],
+        render_kw={'placeholder': 'iPhone 13 Pro'})
+    price = IntegerField('Quantity', validators=[DataRequired()])
+    currencey = StringField(
+        'Currency',
+        validators=[DataRequired(), Length(1, 64)],
+        render_kw={'placeholder': 'KES'})
+    description = TextAreaField(
+        'Product Description',
+        validators=[DataRequired(), Length(1, 64)],
+        render_kw={'placeholder': 'iPhone 13 Pro'})
+    image = FileField(
+        'Product Image',
+        validators=[DataRequired()])
