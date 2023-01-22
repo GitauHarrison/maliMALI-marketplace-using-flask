@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash, request
 from app.forms import LoginForm, VendorRegistrationForm, \
     CustomerRegistrationForm, AdminRegistrationForm, AddToCart,\
     ProductsForSaleForm
@@ -54,12 +54,9 @@ def dashboard_vendor():
         product_image_path = os.path.join(
             app.config['VENDOR_UPLOAD_PATH'], filename)
         uploaded_file.save(product_image_path)
-        print('Product image path: ', product_image_path)
-        # product.image = product_image_path
 
         product_image_path_list = product_image_path.split('/')[2:]
         new_product_image_path = '/'.join(product_image_path_list)
-        print('new_product_image_path: ', new_product_image_path)
         product.image = new_product_image_path
 
         db.session.add(product)
@@ -73,11 +70,31 @@ def dashboard_vendor():
 @login_required
 def dashboard_vendor_all_products():
     products = current_user.products_for_sale.all()
-    print(products)
+    num_products = len(products)
     return render_template(
         'vendor/products.html',
         title='All Products',
-        products=products)
+        products=products,
+        num_products=num_products)
+
+
+@app.route('/dashboard/vendor/product/<int:id>/delete', methods=['GET', 'POST'])
+@login_required
+def dashboard_vendor_delete_product():
+    product = ProductsForSale.query.filter_by(id=id).first_or_404()
+    db.session.delete(product)
+    flash('Product deleted successfully.')
+    return redirect(url_for('dashboard_vendor_all_products'))
+
+
+@app.route('/dashboard/vendor/product/<int:id>/allow', methods=['GET', 'POST'])
+@login_required
+def dashboard_vendor_allow_product(id):
+    product = ProductsForSale.query.filter_by(id=id).first_or_404()
+    product.allow_status=True
+    db.session.commit()
+    flash('Product allowed to appear in home page. Head over there to check')
+    return redirect(url_for('dashboard_vendor_all_products'))
 
 
 @app.route('/dashboard/customer', methods=['GET', 'POST'])
@@ -190,5 +207,10 @@ def logout():
 @app.route('/shop', methods=['GET', 'POST'])
 def shop():
     """All products listed here"""
+    products = ProductsForSale.query.filter_by(allow_status=True).all()
     form = AddToCart()
-    return render_template('index.html', title='From The Shop', form=form)
+    return render_template(
+        'index.html',
+        title='From The Shop',
+        form=form,
+        products=products)

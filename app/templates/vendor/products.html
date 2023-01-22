@@ -10,32 +10,52 @@
                 {% include '_flash_message.html' %}
                 <!-- End of flash message -->
     
-                <h1>{{ title }}</h1>
+                <h1>{{ title }} ({{num_products}})</h1>
     
                 <div class="row pb-5 mb-4">
                     {% for product in products %}
-                        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                            <!-- Card-->
-                            <div class="card rounded shadow-sm border-0 mt-4">
-                                <div class="card-body p-4">
-                                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
-                                    <h5> <a href="#" class="text-dark">{{ product.name }}</a></h5>
-                                    <p class="small text-muted ">{{ product.description }}</p>
-                                    <p>{{ product.currency }}: {{ product.price }}</p>
-                                    <!-- Add to cart form-->
-                                    <div class="my-form">
-                                        <p>add to cart form will go here</p>
-                                    </div>
-                                    <!-- End -->
-                                    <div class="mt-4">
-                                        <p>
-                                            <a href="#">Edit</a> | <a href="#">Allow</a>
-                                        </p>
+                        {% if product %}
+                            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                                <p class="mt-2">
+                                    <a href="{{ url_for('dashboard_vendor') }}">Add another product here</a>.
+                                </p>
+                                <!-- Card-->
+                                <div class="card rounded shadow-sm border-0 mt-4">
+                                    <div class="card-body p-4">
+                                        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
+                                        <h5> <a href="#" class="text-dark">{{ product.name }}</a></h5>
+                                        <p class="small text-muted ">{{ product.description }}</p>
+                                        <p>{{ product.currency }}: {{ product.price }}</p>
+                                        <!-- Add to cart form-->
+                                        <div class="my-form">
+                                            <p>add to cart form will go here</p>
+                                        </div>
+                                        <!-- End -->
+
+                                        <!-- Take action -->
+                                        <div class="mt-4">
+                                            <p>
+                                                {% if product.allow_status == False %}
+                                                    <a href="{{ url_for('dashboard_vendor_allow_product', id=product.id) }}" class="allow" >Allow</a>
+                                                {% endif %} 
+                                                {% if product.allow_status == True %}
+                                                    <a href="{{ url_for('dashboard_vendor_allow_product', id=product.id) }}" class="not-active allow">Allowed</a>
+                                                {% endif %}  | 
+                                                <a href="{{ url_for('dashboard_vendor_delete_product', id=product.id) }}" class="delete">Delete</a>
+                                            </p>
+                                        </div>
+                                        <!-- End -->
+                                        
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}                        
                     {% endfor %}
+                    {% if num_products < 1 %}
+                        <p class="mt-2">
+                            There is no product you have added. <a href="{{ url_for('dashboard_vendor') }}">Add here</a>.
+                        </p>
+                    {% endif %}
                 </div>
             </div>      
         </div>

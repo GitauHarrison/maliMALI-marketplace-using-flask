@@ -209,3 +209,27 @@ a:visited {
     pointer-events: none;
     cursor: default;
 }
+.allow {
+    background-color: orange;
+}
+.delete {
+    background-color: red;
+}
+.allow, .delete {
+    color: white;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 5px;
+}
+.allow:hover {
+    box-shadow: #807e0b33 0px 5px 15px;
+}
+.delete:hover {
+    box-shadow: #8a280a33 0px 2px 8px 0px;
+}
+.allow:hover, .delete:hover {
+    color: white;
+    font-size: 25px;
+}

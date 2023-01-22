@@ -128,6 +128,7 @@ class ProductsForSale(db.Model):
     description = db.Column(db.String(64), default='iPhone 13', nullable=False)
     quantity = db.Column(db.Integer, default=0, nullable=False)
     image = db.Column(db.String(64), default='static/images/vendor/uploads', nullable=False)
+    allow_status = db.Column(db.Boolean, default=False)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', ondelete='CASCADE'))
 
 
