@@ -216,3 +216,14 @@ def shop():
         title='From The Shop',
         form=form,
         products=products)
+
+
+@app.route('/shop/product/<int:id>')
+def view_product(id):
+    form = AddToCart()
+    product = ProductsForSale.query.filter_by(id=id).first_or_404()
+    return render_template(
+        'product_customer.html',
+        title='Product Details',
+        product=product,
+        form=form)

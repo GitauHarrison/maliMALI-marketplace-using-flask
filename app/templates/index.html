@@ -17,8 +17,7 @@
                             <div class="card rounded shadow-sm border-0 mt-4">
                                 <div class="card-body p-4">
                                     <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
-                                    <h5> <a href="#" class="text-dark">{{ product.name }}</a></h5>
-                                    <p class="small text-muted ">{{ product.description }}</p>
+                                    <h5><a href="{{ url_for('view_product', id=product.id) }}" class="text-dark">{{ product.name }}</a></h5>
                                     <p>{{ product.currency }}: {{ product.price }}</p>
                                     <!-- Add to cart form-->
                                     <form action="" method="post" novalidate class="product-form">

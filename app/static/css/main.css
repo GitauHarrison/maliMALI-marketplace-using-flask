@@ -199,14 +199,8 @@ a:hover {
 a:visited {
     color: #9191ff;
 }
-
-/* ---------------------------------------------------
-    LINKS
------------------------------------------------------ */
-.my-form {
-    padding: 10px;
-    border: 1px solid #e7e7e7;
-    border-radius: 10px;
+h5 a {
+    color: blue;
 }
 .not-active {
     pointer-events: none;
@@ -235,6 +229,15 @@ a:visited {
 .allow:hover, .delete:hover {
     color: white;
     font-size: 25px;
+}
+
+/* ---------------------------------------------------
+    FORMS
+----------------------------------------------------- */
+.my-form {
+    padding: 10px;
+    border: 1px solid #e7e7e7;
+    border-radius: 10px;
 }
 
 
