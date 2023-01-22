@@ -46,10 +46,10 @@
 
                         <ul class="list-unstyled components">
                             <li class="active">
-                                <a href="#">Add product</a>
+                                <a href="{{ url_for('dashboard_vendor') }}">Add product</a>
                             </li>
                             <li>
-                                <a href="{{ url_for('dashboard_vendor') }}">All products</a>
+                                <a href="{{ url_for('dashboard_vendor_all_products') }}">All products</a>
                             </li>
                         </ul>
                     {% endif %}
@@ -177,6 +177,10 @@
                 $('#phone').val($('#_phone').intlTelInput("getNumber"));
             });
         </script>
+
+        <!-- Momentjs -->
+        {{ moment.include_moment() }}
+
     {% endblock %}
 </body>
 
