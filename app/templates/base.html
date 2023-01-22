@@ -45,12 +45,11 @@
                         </div>
 
                         <ul class="list-unstyled components">
-                            <p>Dashboard</p>
                             <li class="active">
                                 <a href="#">Add product</a>
                             </li>
                             <li>
-                                <a href="#">All products</a>
+                                <a href="{{ url_for('dashboard_vendor') }}">All products</a>
                             </li>
                         </ul>
                     {% endif %}
@@ -59,13 +58,12 @@
                     <!-- Sidebar as seen by admin -->
                     {% if current_user.type == 'admin' %}
                         <div class="sidebar-header">
-                            <h3>Admin</h3>
+                            <h3>Dashboard</h3>
                         </div>
 
                         <ul class="list-unstyled components">
-                            <p>Dashboard</p>
                             <li class="active">
-                                <a href=" {{ url_for('dashboard') }} ">Register Vendor</a>
+                                <a href=" {{ url_for('dashboard_admin') }} ">Register Vendor</a>
                             </li>
                         </ul>
                     {% endif %}
