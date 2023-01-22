@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, \
-    SelectField, IntegerField, TextAreaField, FileField
+    SelectField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, \
     Regexp, ValidationError
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 import phonenumbers
 from app.models import User
 
@@ -104,8 +105,8 @@ class ProductsForSaleForm(FlaskForm):
         'Product Name',
         validators=[DataRequired(), Length(1, 64)],
         render_kw={'placeholder': 'iPhone 13 Pro'})
-    price = IntegerField('Quantity', validators=[DataRequired()])
-    currencey = StringField(
+    price = IntegerField('Price', validators=[DataRequired()])
+    currency = StringField(
         'Currency',
         validators=[DataRequired(), Length(1, 64)],
         render_kw={'placeholder': 'KES'})
@@ -113,6 +114,10 @@ class ProductsForSaleForm(FlaskForm):
         'Product Description',
         validators=[DataRequired(), Length(1, 64)],
         render_kw={'placeholder': 'iPhone 13 Pro'})
+    quantity = IntegerField('Quantity', validators=[DataRequired()])
     image = FileField(
         'Product Image',
-        validators=[DataRequired()])
+        validators=[
+        FileRequired(),
+        FileAllowed(['jpg', 'png', 'svg'])])
+    submit = SubmitField('Add')
