@@ -3,7 +3,7 @@ from flask import render_template, url_for, redirect, flash
 from app.forms import LoginForm, VendorRegistrationForm, \
     CustomerRegistrationForm, AdminRegistrationForm, AddToCart
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import Admin, Vendor, Customer, User
 
 
 @app.route('/dashboard')
@@ -34,9 +34,10 @@ def register_customer():
         return redirect(url_for('dashboard'))
     form = CustomerRegistrationForm()
     if form.validate_on_submit():
-        user = User(
+        user = Customer(
             username=form.username.data,
             email=form.email.data,
+            phone=form.phone.data,
             residence=form.residence.data)
         user.set_password(form.password.data)
         db.session.add(user)
@@ -53,9 +54,10 @@ def register_vendor():
         return redirect(url_for('dashboard'))
     form = VendorRegistrationForm()
     if form.validate_on_submit():
-        vendor = User(
+        vendor = Vendor(
             username=form.username.data,
             email=form.email.data,
+            phone=form.phone.data,
             shop_name=form.shop_name.data)
         vendor.set_password(form.password.data)
         db.session.add(vendor)
@@ -71,9 +73,10 @@ def register_admin():
         return redirect(url_for('dashboard'))
     form = AdminRegistrationForm()
     if form.validate_on_submit():
-        admin = User(
+        admin = Admin(
             username=form.username.data,
             email=form.email.data,
+            phone=form.phone.data,
             shop_name=form.shop_name.data)
         admin.set_password(form.password.data)
         db.session.add(admin)

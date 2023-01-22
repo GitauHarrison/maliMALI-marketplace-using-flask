@@ -135,6 +135,20 @@
                 });
             });
         </script>
+
+        <!-- Phone number -->
+        <script>
+            $("#phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
+            $("#phone").parent().append('<div><input type="tel" id="_phone"></div>');
+            $("#_phone").intlTelInput({
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+            });
+            $("#_phone").intlTelInput("setNumber", $('#phone').val());
+            $('#_phone').blur(function() {
+                $('#phone').val($('#_phone').intlTelInput("getNumber"));
+            });
+        </script>
     {% endblock %}
 </body>
 
