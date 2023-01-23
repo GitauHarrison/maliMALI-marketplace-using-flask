@@ -19,8 +19,9 @@
             </p>
         {% endif %}
     {% endblock %}
-{% else %}
-    {% block app_context %}
+    {% endif %}
+{% if current_user.is_anonymous %}
+    {% block app_content %}
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ title }}</h1>
