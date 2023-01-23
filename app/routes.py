@@ -226,11 +226,14 @@ def shop():
                 name=cart_product.name,
                 cost=session['product']['quantity'] * cart_product.price,
                 quantity=session['product']['quantity'],
+                currency=cart_product.currency,
+                description=cart_product.description,
+                image=cart_product.image,
                 vendor_id=cart_product.vendor_id
             )
             db.session.add(product_for_purchase)
             db.session.commit()
-            flash('Product added to cart.')
+            flash('Product added to cart. Continue shopping, otherise see cart to checkout.')
             del session['product']
             return redirect(url_for('shop'))
     except:
@@ -269,10 +272,38 @@ def view_product(id):
         form=form)
 
 
-@app.route('/dashboard/customer/cart-items', methods=['GET', 'POST'])
-@login_required
+@app.route('/dashboard/customer/cart-items')
 def dashboard_customer_cart_items():
-    return render_template('cart_items.html', title='Cart Items')
+    cart_items = PurchasedProducts.query.all()
+    num_cart_items = len(cart_items)
+    return render_template(
+        'cart_items.html',
+        title='Cart Items',
+        cart_items=cart_items,
+        num_cart_items=num_cart_items)
+
+
+@app.route('/dashboard/customer/cart-item/<int:id>/delete')
+@login_required
+def dashboard_customer_cart_items_delete(id):
+    cart_item = PurchasedProducts.query.filter_by(id=id).first_or_404()
+    db.session.delete(cart_item)
+    db.session.commit()
+    flash(f'{cart_item.name} deleted from your cart.')
+    return redirect(url_for('dashboard_customer_cart_items'))
+
+
+@app.route('/dashboard/customer/cart-items/buy')
+@login_required
+def dashboard_customer_checkout():
+    cart_items = PurchasedProducts.query.all()
+    num_cart_items = len(cart_items)
+    return render_template(
+        'cart_items_checkout.html',
+        title='Buy Your Items',
+        cart_items=cart_items,
+        num_cart_items=num_cart_items)
+
 
 # ===========
 # END OF CUSTOMER
