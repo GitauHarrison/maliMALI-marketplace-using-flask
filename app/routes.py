@@ -1,7 +1,5 @@
 from app import app, db
-from flask import render_template, url_for, redirect, flash, session,\
-    request
-import requests
+from flask import render_template, url_for, redirect, flash, session
 from app.forms import LoginForm, VendorRegistrationForm, \
     CustomerRegistrationForm, AdminRegistrationForm, AddToCart,\
     ProductsForSaleForm
@@ -173,28 +171,28 @@ def register_customer():
 #     return render_template('auth/register.html', title='Register', form=form)
 
 
-@app.route('/register/admin', methods=['GET', 'POST'])
-def register_admin():
-    if current_user.is_authenticated:
-        if current_user.type == 'admin':
-            return redirect(url_for('dashboard_admin'))
-        if current_user.type == 'vendor':
-            return redirect(url_for('dashboard_vendor'))
-        if current_user.type == 'customer':
-            return redirect(url_for('dashboard_customer'))
-    form = AdminRegistrationForm()
-    if form.validate_on_submit():
-        admin = Admin(
-            username=form.username.data,
-            email=form.email.data,
-            phone=form.phone.data,
-            department=form.department.data)
-        admin.set_password(form.password.data)
-        db.session.add(admin)
-        db.session.commit()
-        flash('Registered successfully as admin. Please log in to continue')
-        return redirect(url_for('login'))
-    return render_template('auth/register.html', title='Register', form=form)
+# @app.route('/register/admin', methods=['GET', 'POST'])
+# def register_admin():
+#     if current_user.is_authenticated:
+#         if current_user.type == 'admin':
+#             return redirect(url_for('dashboard_admin'))
+#         if current_user.type == 'vendor':
+#             return redirect(url_for('dashboard_vendor'))
+#         if current_user.type == 'customer':
+#             return redirect(url_for('dashboard_customer'))
+#     form = AdminRegistrationForm()
+#     if form.validate_on_submit():
+#         admin = Admin(
+#             username=form.username.data,
+#             email=form.email.data,
+#             phone=form.phone.data,
+#             department=form.department.data)
+#         admin.set_password(form.password.data)
+#         db.session.add(admin)
+#         db.session.commit()
+#         flash('Registered successfully as admin. Please log in to continue')
+#         return redirect(url_for('login'))
+#     return render_template('auth/register.html', title='Register', form=form)
 
 
 @app.route('/logout')
@@ -222,7 +220,6 @@ def shop():
         if current_user.type == 'vendor':
             return redirect(url_for('dashboard_vendor'))
     products = ProductsForSale.query.filter_by(allow_status=True).all()
-    form = AddToCart()
     try:
         if 'product' in session:
             # Get product details
@@ -236,8 +233,7 @@ def shop():
                 currency=cart_product.currency,
                 description=cart_product.description,
                 image=cart_product.image,
-                vendor_id=cart_product.vendor_id
-            )
+                vendor_id=cart_product.vendor_id)
             db.session.add(product_for_purchase)
             db.session.commit()
             flash('Product added to cart. Continue shopping, otherise see cart to checkout.')
@@ -250,7 +246,6 @@ def shop():
     return render_template(
         'index.html',
         title='From The Shop',
-        form=form,
         products=products,
         num_products=num_products)
 
@@ -273,10 +268,7 @@ def view_product(id):
     product = ProductsForSale.query.filter_by(id=id).first_or_404()
     form = AddToCart()
     if form.validate_on_submit():
-        add_product = {
-            "product_id": product.id,
-            "quantity": form.quantity.data
-        }
+        add_product = {"product_id": product.id,"quantity": form.quantity.data}
         session['product'] = add_product
         return redirect(url_for('shop'))
     return render_template(
