@@ -5,10 +5,16 @@
 
     <div class="row">
         <div class="col-md-12">
+
+            <!-- Flash message -->
+            {% include '_flash_message.html' %}
+            <!-- End of flash message -->
+            
             <!-- products -->
             <h2 class="font-weight-bold mb-2">{{ title }}</h2>
             <p class="text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
 
+            {% if num_products > 0 %}
             <div class="row pb-5 mb-4">
                 {% for product in products %}
                     {% if product %}
@@ -16,7 +22,9 @@
                             <!-- Card-->
                             <div class="card rounded shadow-sm border-0 mt-4">
                                 <div class="card-body p-4">
-                                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
+                                    <div id="zoom">
+                                        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
+                                    </div>
                                     <h5><a href="{{ url_for('view_product', id=product.id) }}" class="text-dark">{{ product.name }}</a></h5>
                                     <p>{{ product.currency }}: {{ product.price }}</p>
                                     <!-- Add to cart form-->
@@ -38,6 +46,141 @@
                     {% endif %}                        
                 {% endfor %}
             </div>
+            {% endif %}
+
+            {% if num_products < 1 %}
+            <hr>
+            <h3>Demo products</h3>
+            <!-- Demo products -->
+            <div class="row pb-5 mb-4">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">                    
+                    <!-- Card-->
+                    <div class="card rounded shadow-sm border-0 mt-4">
+                        <div class="card-body p-4">
+                            <div id="zoom">
+                                <img src="https://picsum.photos/200/300?grayscale" alt="" class="img-fluid d-block mx-auto mb-3">
+                            </div>
+                            <h5><a href="#" class="text-dark">iPhone 13 Pro</a></h5>
+                            <p>KES: 100000</p>
+                            <!-- Add to cart form-->
+                            <form action="#" class="product-form">
+                                <div class="form-group">
+                                  <label>Quantity</label>
+                                  <input type="number" name="number" placeholder="1" class="form-control">
+                                  <button type="submit" class="btn">Add</button>
+                                </div>
+                            </form>
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <!-- Card-->
+                    <div class="card rounded shadow-sm border-0 mt-4">
+                        <div class="card-body p-4">
+                            <div id="zoom">
+                                <img src="https://picsum.photos/200/300.jpg" alt="" class="img-fluid d-block mx-auto mb-3">
+                            </div>
+                            <h5><a href="#" class="text-dark">iPhone 13 Pro</a></h5>
+                            <p>KES: 100000</p>
+                            <!-- Add to cart form-->
+                            <form action="#" class="product-form">
+                                <div class="form-group">
+                                  <label>Quantity</label>
+                                  <input type="number" name="number" placeholder="1" class="form-control">
+                                  <button type="submit" class="btn">Add</button>
+                                </div>
+                            </form>
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <!-- Card-->
+                    <div class="card rounded shadow-sm border-0 mt-4">
+                        <div class="card-body p-4">
+                            <div id="zoom">
+                                <img src="https://picsum.photos/200/300?grayscale" alt="" class="img-fluid d-block mx-auto mb-3">
+                            </div>
+                            <h5><a href="#" class="text-dark">iPhone 13 Pro</a></h5>
+                            <p>KES: 100000</p>
+                            <!-- Add to cart form-->
+                            <form action="#" class="product-form">
+                                <div class="form-group">
+                                  <label>Quantity</label>
+                                  <input type="number" name="number" placeholder="1" class="form-control">
+                                  <button type="submit" class="btn">Add</button>
+                                </div>
+                            </form>
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <!-- Card-->
+                    <div class="card rounded shadow-sm border-0 mt-4">
+                        <div class="card-body p-4">
+                            <div id="zoom">
+                                <img src="https://picsum.photos/200/300" alt="" class="img-fluid d-block mx-auto mb-3">
+                            </div>
+                            <h5><a href="#" class="text-dark">iPhone 13 Pro</a></h5>
+                            <p>KES: 100000</p>
+                            <!-- Add to cart form-->
+                            <form action="#" class="product-form">
+                                <div class="form-group">
+                                  <label>Quantity</label>
+                                  <input type="number" name="number" placeholder="1" class="form-control">
+                                  <button type="submit" class="btn">Add</button>
+                                </div>
+                            </form>
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <!-- Card-->
+                    <div class="card rounded shadow-sm border-0 mt-4">
+                        <div class="card-body p-4">
+                            <div id="zoom">
+                                <img src="https://picsum.photos/id/237/200/300" alt="" class="img-fluid d-block mx-auto mb-3">
+                            </div>
+                            <h5><a href="#" class="text-dark">iPhone 13 Pro</a></h5>
+                            <p>KES: 100000</p>
+                            <!-- Add to cart form-->
+                            <form action="#" class="product-form">
+                                <div class="form-group">
+                                  <label>Quantity</label>
+                                  <input type="number" name="number" placeholder="1" class="form-control">
+                                  <button type="submit" class="btn">Add</button>
+                                </div>
+                            </form>
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <!-- Card-->
+                    <div class="card rounded shadow-sm border-0 mt-4">
+                        <div class="card-body p-4">
+                            <div id="zoom">
+                                <img src="https://picsum.photos/seed/picsum/200/300" alt="" class="img-fluid d-block mx-auto mb-3">
+                            </div>
+                            <h5><a href="#" class="text-dark">iPhone 13 Pro</a></h5>
+                            <p>KES: 100000</p>
+                            <!-- Add to cart form-->
+                            <form action="#" class="product-form">
+                                <div class="form-group">
+                                  <label>Quantity</label>
+                                  <input type="number" name="number" placeholder="1" class="form-control">
+                                  <button type="submit" class="btn">Add</button>
+                                </div>
+                            </form>
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>        
     </div>
 {% endblock %}

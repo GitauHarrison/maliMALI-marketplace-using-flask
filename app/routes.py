@@ -1,5 +1,7 @@
 from app import app, db
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, session,\
+    request
+import requests
 from app.forms import LoginForm, VendorRegistrationForm, \
     CustomerRegistrationForm, AdminRegistrationForm, AddToCart,\
     ProductsForSaleForm
@@ -8,6 +10,7 @@ from app.models import Admin, Vendor, Customer, User, ProductsForSale,\
     PurchasedProducts
 from werkzeug.utils import secure_filename
 import os
+from urllib.parse import urlparse
 
 
 @app.route('/dashboard/register/vendor', methods=['GET', 'POST'])
@@ -82,9 +85,10 @@ def dashboard_vendor_all_products():
 
 @app.route('/dashboard/vendor/product/<int:id>/delete', methods=['GET', 'POST'])
 @login_required
-def dashboard_vendor_delete_product():
+def dashboard_vendor_delete_product(id):
     product = ProductsForSale.query.filter_by(id=id).first_or_404()
     db.session.delete(product)
+    db.session.commit()
     flash('Product deleted successfully.')
     return redirect(url_for('dashboard_vendor_all_products'))
 
@@ -97,12 +101,6 @@ def dashboard_vendor_allow_product(id):
     db.session.commit()
     flash('Product allowed to appear in home page. Head over there to check')
     return redirect(url_for('dashboard_vendor_all_products'))
-
-
-@app.route('/dashboard/customer', methods=['GET', 'POST'])
-@login_required
-def dashboard_customer():    
-    return render_template('dashboard_customer.html', title='Dashboard')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -126,6 +124,8 @@ def login():
             return redirect(url_for('dashboard_admin'))
         if current_user.type == 'vendor':
             return redirect(url_for('dashboard_vendor'))
+        if current_user.type == 'customer':
+            return redirect(url_for('dashboard_customer'))
     return render_template('auth/login.html', title='Login', form=form)
 
 
@@ -205,25 +205,75 @@ def logout():
     return redirect(url_for('login'))
 
 
+# ===========
+# CUSTOMER
+# ===========
+
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/shop', methods=['GET', 'POST'])
 def shop():
     """All products listed here"""
     products = ProductsForSale.query.filter_by(allow_status=True).all()
     form = AddToCart()
+    try:
+        if 'product' in session:
+            # Get product details
+            cart_product = ProductsForSale.query.get(session['product']['product_id'])
+
+            # Add product to db
+            product_for_purchase = PurchasedProducts(
+                name=cart_product.name,
+                cost=session['product']['quantity'] * cart_product.price,
+                quantity=session['product']['quantity'],
+                vendor_id=cart_product.vendor_id
+            )
+            db.session.add(product_for_purchase)
+            db.session.commit()
+            flash('Product added to cart.')
+            del session['product']
+            return redirect(url_for('shop'))
+    except:
+        session.clear()
+    num_products = len(products)
+    #print(items_in_cart[0]['product_id'])
     return render_template(
         'index.html',
         title='From The Shop',
         form=form,
-        products=products)
+        products=products,
+        num_products=num_products)
 
 
-@app.route('/shop/product/<int:id>')
+@app.route('/dashboard/customer/purchase-history', methods=['GET', 'POST'])
+@login_required
+def dashboard_customer():
+    return render_template('dashboard_customer.html', title='Purchase History')
+
+
+@app.route('/shop/product/<int:id>', methods=['GET', 'POST'])
 def view_product(id):
-    form = AddToCart()
     product = ProductsForSale.query.filter_by(id=id).first_or_404()
+    form = AddToCart()
+    if form.validate_on_submit():
+        add_product = {
+            "product_id": product.id,
+            "quantity": form.quantity.data
+        }
+        session['product'] = add_product
+        return redirect(url_for('shop'))
     return render_template(
         'product_customer.html',
         title='Product Details',
         product=product,
         form=form)
+
+
+@app.route('/dashboard/customer/cart-items', methods=['GET', 'POST'])
+@login_required
+def dashboard_customer_cart_items():
+    return render_template('cart_items.html', title='Cart Items')
+
+# ===========
+# END OF CUSTOMER
+# ===========
