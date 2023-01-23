@@ -132,9 +132,10 @@ class ProductsForSale(db.Model):
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', ondelete='CASCADE'))
 
 
-class PurchasedProducts(db.Model):
+class PurchasedProducts(db.Model): # should be PurchasedProduct()
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), default='iPhone 13', nullable=False)
     cost = db.Column(db.Integer, default=0, nullable=False)
     quantity = db.Column(db.Integer, default=1, nullable=False)
-    vendor_id = db.Column(db.Integer, db.ForeignKey('customer.id', ondelete='CASCADE'))
+    vendor_id = db.Column(db.Integer, default=1, nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id', ondelete='CASCADE'))
