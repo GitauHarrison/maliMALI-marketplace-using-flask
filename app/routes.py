@@ -214,6 +214,13 @@ def logout():
 @app.route('/shop', methods=['GET', 'POST'])
 def shop():
     """All products listed here"""
+    if current_user.is_authenticated:
+        if current_user.type == 'customer':
+            return redirect(url_for('dashboard_customer'))
+        if current_user.type == 'admin':
+            return redirect(url_for('dashboard_admin'))
+        if current_user.type == 'vendor':
+            return redirect(url_for('dashboard_vendor'))
     products = ProductsForSale.query.filter_by(allow_status=True).all()
     form = AddToCart()
     try:
@@ -256,6 +263,13 @@ def dashboard_customer():
 
 @app.route('/shop/product/<int:id>', methods=['GET', 'POST'])
 def view_product(id):
+    if current_user.is_authenticated:
+        if current_user.type == 'customer':
+            return redirect(url_for('dashboard_customer'))
+        if current_user.type == 'admin':
+            return redirect(url_for('dashboard_admin'))
+        if current_user.type == 'vendor':
+            return redirect(url_for('dashboard_vendor'))
     product = ProductsForSale.query.filter_by(id=id).first_or_404()
     form = AddToCart()
     if form.validate_on_submit():
@@ -272,8 +286,15 @@ def view_product(id):
         form=form)
 
 
-@app.route('/dashboard/customer/cart-items')
+@app.route('/customer/cart-items')
 def dashboard_customer_cart_items():
+    if current_user.is_authenticated:
+        if current_user.type == 'customer':
+            return redirect(url_for('dashboard_customer'))
+        if current_user.type == 'admin':
+            return redirect(url_for('dashboard_admin'))
+        if current_user.type == 'vendor':
+            return redirect(url_for('dashboard_vendor'))
     cart_items = PurchasedProducts.query.all()
     num_cart_items = len(cart_items)
     return render_template(
