@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
 
@@ -9,7 +8,7 @@
             <!-- Flash message -->
             {% include '_flash_message.html' %}
             <!-- End of flash message -->
-            
+
             <!-- products -->
             <h2 class="font-weight-bold mb-2">{{ title }}</h2>
             <p class="text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -25,21 +24,12 @@
                                     <div id="zoom">
                                         <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
                                     </div>
+                                    <hr>
                                     <h5><a href="{{ url_for('view_product', id=product.id) }}" class="text-dark">{{ product.name }}</a></h5>
+                                    <hr>
                                     <p>{{ product.currency }}: {{ product.price }}</p>
-                                    <!-- Add to cart form-->
-                                    <form action="" method="post" novalidate class="product-form">
-                                        {{ form.hidden_tag() }}
-                                        <div class="form-group">
-                                            <label for="">{{ form.quantity.label }}</label>
-                                            {{ form.quantity(size=32, class_='form-control') }}
-                                            {% for error in form.quantity.errors %}
-                                                <span style="color: red;">{{ error }}</span>
-                                            {% endfor %}
-                                            {{ form.submit(class_='btn') }}
-                                        </div>
-                                    </form>
-                                    <!-- End -->
+                                    <hr>
+                                    <a href="{{ url_for('view_product', id=product.id) }}" class="btn btn-dark">Add to Cart</a>
                                 </div>
                             </div>
                         </div>
