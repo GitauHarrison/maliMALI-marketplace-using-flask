@@ -1,5 +1,6 @@
 from app import app, db
-from flask import render_template, url_for, redirect, flash, session
+from flask import render_template, url_for, redirect, flash, session,\
+    request
 from app.forms import LoginForm, VendorRegistrationForm, \
     CustomerRegistrationForm, AdminRegistrationForm, AddToCart,\
     ProductsForSaleForm
@@ -10,6 +11,7 @@ from werkzeug.utils import secure_filename
 import os
 import requests
 from app import mpesa
+from app.location import get_user_location
 
 
 @app.route('/dashboard/register/vendor', methods=['GET', 'POST'])
@@ -255,10 +257,19 @@ def shop():
 @app.route('/dashboard/customer/purchase-history', methods=['GET', 'POST'])
 @login_required
 def dashboard_customer():
+    # Get all purchased products by the current user
     paid_products = current_user.purchased_products.filter_by(payment_status=True).all()
+
+    # User location coordinates
+    user_location = get_user_location()
+    latitude = user_location.latitude
+    longitude = user_location.longitude
+
     return render_template(
         'dashboard_customer.html',
         title='Purchase History',
+        latitude=latitude,
+        longitude=longitude,
         paid_products=paid_products)
 
 
@@ -342,7 +353,7 @@ def lipa_na_mpesa(id):
     access_token = mpesa.MpesaAccessToken.validated_mpesa_access_token
     api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     headers = {'Authorization': 'Bearer %s' % access_token}
-    request = {
+    mpesa_request = {
         'BusinessShortCode': mpesa.LipaNaMpesaPassword.business_short_code,   # org receiving funds
         'Password': mpesa.LipaNaMpesaPassword.decode_online_password,         # used to encrypt the request
         'Timestamp':mpesa.LipaNaMpesaPassword.lipa_time,                      # transaction time
@@ -356,7 +367,7 @@ def lipa_na_mpesa(id):
         'TransactionDesc': 'testing stk push for ecommerce app'
     }
     try:
-        response = requests.post(api_url, json=request, headers=headers)
+        response = requests.post(api_url, json=mpesa_request, headers=headers)
         print(response.text, f'\n\nStatus: {response.status_code}')
 
         # Update payment status in database

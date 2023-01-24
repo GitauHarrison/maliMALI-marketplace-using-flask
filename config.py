@@ -30,3 +30,6 @@ class Config(object):
     MPESA_INITIATOR_NAME = os.environ.get('MPESA_INITIATOR_NAME')
     MPESA_BASIC_AUTHORIZATION = os.environ.get('MPESA_BASIC_AUTHORIZATION')
     MPESA_GRANT_TYPE = os.environ.get('MPESA_GRANT_TYPE')
+
+    # IP Info
+    IP_INFO_ACCESS_TOKEN = os.environ.get('IP_INFO_ACCESS_TOKEN')
