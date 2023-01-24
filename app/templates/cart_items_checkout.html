@@ -47,7 +47,7 @@
                                             {% endif %}
                                             <!-- Checkout -->
                                             {% if product.customer_id == current_user.id %}
-                                                <a href="{{ url_for('lipa_na_mpesa') }}" class="btn btn-success">Checkout</a>
+                                                <a href="{{ url_for('lipa_na_mpesa', id=product.id) }}" class="btn btn-warning">Checkout (Mpesa)</a>
                                             {% endif %}  
                                         {% endif %}   
                                         {% if product.payment_status == True %}                                                                          

@@ -5,22 +5,37 @@
 {% if current_user.type == 'customer' %}
     {% block current_user_content %}
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <!-- Flash message -->
                 {% include '_flash_message.html' %}
                 <!-- End of flash message -->
     
                 <h1>{{ title }}</h1>
     
-                <p>
-                    <div class="my-form">
-                        form will go here
-                    </div>
-                </p>
-            </div>   
-            <div class="col-md-6">
-                <!-- Empty col -->
-            </div>     
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Cost</th>
+                                <th>Payment Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>2</td>
+                                <td>KES 100</td>
+                                <td>200</td>
+                                <td>True</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>    
         </div>
     {% endblock %}
 {% endif %}
