@@ -21,16 +21,20 @@
                                 <th>Price</th>
                                 <th>Cost</th>
                                 <th>Payment Status</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <td>2</td>
-                                <td>KES 100</td>
-                                <td>200</td>
-                                <td>True</td>
-                            </tr>
+                            {% for product in paid_products %}
+                                <tr>
+                                    <td>{{product.name}}</td>
+                                    <td>{{product.quantity}}</td>
+                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.cost }}</td>
+                                    <td>{{ product.payment_status }}</td>
+                                    <td>{{ moment(product.purchased_at).format('lll') }}</td>
+                                </tr>
+                            {% endfor %}                            
                         </tbody>
                     </table>
                 </div>

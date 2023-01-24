@@ -229,8 +229,9 @@ def shop():
             # Add product to db
             product_for_purchase = PurchasedProducts(
                 name=cart_product.name,
-                cost=session['product']['quantity'] * cart_product.price,
+                price=cart_product.price,
                 quantity=session['product']['quantity'],
+                cost=session['product']['quantity'] * cart_product.price,                
                 currency=cart_product.currency,
                 description=cart_product.description,
                 image=cart_product.image,
@@ -254,7 +255,11 @@ def shop():
 @app.route('/dashboard/customer/purchase-history', methods=['GET', 'POST'])
 @login_required
 def dashboard_customer():
-    return render_template('dashboard_customer.html', title='Purchase History')
+    paid_products = current_user.purchased_products.filter_by(payment_status=True).all()
+    return render_template(
+        'dashboard_customer.html',
+        title='Purchase History',
+        paid_products=paid_products)
 
 
 @app.route('/shop/product/<int:id>', methods=['GET', 'POST'])
@@ -359,7 +364,7 @@ def lipa_na_mpesa(id):
         product.payment_status = True
         db.session.commit()
         flash(f'{product.name} paid for.')
-        
+
     except Exception as e:
         print(f'Error: \n\n {e}')    
     return redirect(url_for('dashboard_customer'))
