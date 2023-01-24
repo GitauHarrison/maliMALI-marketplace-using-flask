@@ -129,7 +129,7 @@ class ProductsForSale(db.Model):
     quantity = db.Column(db.Integer, default=0, nullable=False)
     image = db.Column(db.String(64), default='static/images/vendor/uploads', nullable=False)
     allow_status = db.Column(db.Boolean, default=False)
-    added_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    added_at = db.Column(db.DateTime, default=datetime.utcnow)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', ondelete='CASCADE'))
 
 
@@ -144,5 +144,5 @@ class PurchasedProducts(db.Model): # should be PurchasedProduct()
     image = db.Column(db.String(64), default='static/images/vendor/uploads', nullable=False)
     payment_status = db.Column(db.Boolean, default=False)
     purchased_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    vendor_id = db.Column(db.Integer, default=1, nullable=False)
+    vendor_id = db.Column(db.Integer, default=1)
     customer_id = db.Column(db.Integer, db.ForeignKey('customer.id', ondelete='CASCADE'))
