@@ -8,7 +8,8 @@ from app.models import Admin, Vendor, Customer, User, ProductsForSale,\
     PurchasedProducts
 from werkzeug.utils import secure_filename
 import os
-from urllib.parse import urlparse
+import requests
+from app import mpesa
 
 
 @app.route('/dashboard/register/vendor', methods=['GET', 'POST'])
@@ -328,6 +329,33 @@ def dashboard_customer_buy_product(id):
                 item.customer_id = current_user.id
                 db.session.commit()
     return redirect(url_for('dashboard_customer_checkout'))
+
+
+@app.route('/lipa-na-mpesa')
+def lipa_na_mpesa():
+    access_token = mpesa.MpesaAccessToken.validated_mpesa_access_token
+    api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    headers = {'Authorization': 'Bearer %s' % access_token}
+    request = {
+        'BusinessShortCode': mpesa.LipaNaMpesaPassword.business_short_code,
+        'Password': mpesa.LipaNaMpesaPassword.decode_online_password,
+        'Timestamp':mpesa.LipaNaMpesaPassword.lipa_time,
+        'TransactionType': 'CustomerPayBillOnline',
+        'Amount': 1,
+        'PartyA': app.config['MPESA_PARTY_A'],
+        'PartyB': mpesa.LipaNaMpesaPassword.business_short_code,
+        'PhoneNumber': int((current_user.phone).replace('+', '')),
+        'CallBackURL': 'https://sandbox.safaricom.co.ke/mpesa/',
+        'AccountReference': 'primashop',
+        'TransactionDesc': 'testing stk push'
+    }
+    try:
+        response = requests.post(api_url, json=request, headers=headers)
+    except Exception as e:
+        print(f'Error: \n\n {e}')
+    print(response.text, f'\n\n{response.status_code}')
+    return redirect(url_for('dashboard_customer_checkout'))
+
 
 # ===========
 # END OF CUSTOMER
