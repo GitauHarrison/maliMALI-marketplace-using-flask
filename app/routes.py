@@ -306,7 +306,7 @@ def dashboard_customer_cart_items_delete(id):
     return redirect(url_for('dashboard_customer_cart_items'))
 
 
-@app.route('/dashboard/customer/cart-items/buy')
+@app.route('/dashboard/customer/cart-items/ready-to-buy')
 @login_required
 def dashboard_customer_checkout():
     cart_items = PurchasedProducts.query.all()
@@ -317,6 +317,16 @@ def dashboard_customer_checkout():
         cart_items=cart_items,
         num_cart_items=num_cart_items)
 
+
+@app.route('/dashboard/customer/cart-item/<int:id>/buy')
+@login_required
+def dashboard_customer_buy_product(id):
+    cart_items = PurchasedProducts.query.all()
+    for item in cart_items:
+        if item.customer_id is None:
+            item.customer_id = current_user.id
+            db.session.commit()
+    return redirect(url_for('dashboard_customer_checkout'))
 
 # ===========
 # END OF CUSTOMER
