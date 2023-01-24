@@ -323,9 +323,10 @@ def dashboard_customer_checkout():
 def dashboard_customer_buy_product(id):
     cart_items = PurchasedProducts.query.all()
     for item in cart_items:
-        if item.customer_id is None:
-            item.customer_id = current_user.id
-            db.session.commit()
+        if item.id is id:
+            if item.customer_id is None:
+                item.customer_id = current_user.id
+                db.session.commit()
     return redirect(url_for('dashboard_customer_checkout'))
 
 # ===========
