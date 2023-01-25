@@ -11,7 +11,8 @@ from werkzeug.utils import secure_filename
 import os
 import requests
 from app import mpesa
-from app.location import get_user_location
+from app.ip_address import get_user_location
+from app.map import get_shops_data, get_shops
 
 
 @app.route('/dashboard/register/vendor', methods=['GET', 'POST'])
@@ -112,7 +113,7 @@ def login():
         if current_user.type == 'vendor':
             return redirect(url_for('dashboard_vendor'))
         if current_user.type == 'customer':
-            return redirect(url_for('dashboard_customer'))
+            return redirect(url_for('dashboard_customer_checkout'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -126,7 +127,7 @@ def login():
         if current_user.type == 'vendor':
             return redirect(url_for('dashboard_vendor'))
         if current_user.type == 'customer':
-            return redirect(url_for('dashboard_customer'))
+            return redirect(url_for('dashboard_customer_checkout'))
     return render_template('auth/login.html', title='Login', form=form)
 
 
@@ -288,11 +289,28 @@ def view_product(id):
         add_product = {"product_id": product.id,"quantity": form.quantity.data}
         session['product'] = add_product
         return redirect(url_for('shop'))
+
+    # Get user location
+    location = get_user_location()
+    lat = location.latitude
+    lon = location.longitude
+    print(lat, ' , ', lon)
+
+    # Display map
+    markers = get_shops_data()
+    print('Shops:', markers)
+
+    my_shops = get_shops()
+    print('My shops: ', my_shops)
+
     return render_template(
         'product_customer.html',
         title='Product Details',
         product=product,
-        form=form)
+        form=form,
+        markers=markers,
+        lat=lat,
+        lon=lon)
 
 
 @app.route('/customer/cart-items')
@@ -306,11 +324,23 @@ def dashboard_customer_cart_items():
             return redirect(url_for('dashboard_vendor'))
     cart_items = PurchasedProducts.query.all()
     num_cart_items = len(cart_items)
+
+    # Get user location
+    location = get_user_location()
+    lat = location.latitude
+    lon = location.longitude
+
+    # Display map
+    markers = get_shops_data()
+
     return render_template(
         'cart_items.html',
         title='Cart Items',
         cart_items=cart_items,
-        num_cart_items=num_cart_items)
+        num_cart_items=num_cart_items,
+        markers=markers,
+        lat=lat,
+        lon=lon)
 
 
 @app.route('/dashboard/customer/cart-item/<int:id>/delete')
@@ -328,11 +358,23 @@ def dashboard_customer_cart_items_delete(id):
 def dashboard_customer_checkout():
     cart_items = PurchasedProducts.query.all()
     num_cart_items = len(cart_items)
+
+    # Get user location
+    location = get_user_location()
+    lat = location.latitude
+    lon = location.longitude
+
+    # Display map
+    markers = get_shops_data()
+
     return render_template(
         'cart_items_checkout.html',
         title='Buy Your Items',
         cart_items=cart_items,
-        num_cart_items=num_cart_items)
+        num_cart_items=num_cart_items,
+        markers=markers,
+        lat=lat,
+        lon=lon)
 
 
 @app.route('/dashboard/customer/cart-item/<int:id>/buy')
