@@ -48,6 +48,7 @@
                                             <!-- Checkout -->
                                             {% if product.customer_id == current_user.id %}
                                                 <a href="{{ url_for('lipa_na_mpesa', id=product.id) }}" class="btn btn-warning">Checkout (Mpesa)</a>
+                                                <small class="text-muted">You will receive a prompt on your phone to complete the payment. Kindly input your Mpesa PIN to complete the transaction.</small>
                                             {% endif %}  
                                         {% endif %}   
                                         {% if product.payment_status == True %}                                                                          
@@ -55,6 +56,18 @@
                                         {% endif %}
                                     </div>
                                 </div>
+
+                                <!-- Start of map -->
+                            <div class="row">
+                                <!-- Map showing shops near the customer -->
+                                <div class="col-md-12">
+                                    <div class="map-responsive">
+                                        <div id="map">{{markers|safe}}</div>
+                                    </div>`                               
+                                </div>
+                            </div>
+                            <!-- End of map -->
+
                             </div>
                         </div>
                     {% endfor %}            
@@ -67,7 +80,7 @@
                 <div class="col-lg-12 col-md-12 mb-2 mb-lg-0">
                     <p>
                         You have no items in the cart. 
-                        To continue shopping, <a href="{{ url_for('logout') }}">logout</a> .
+                        To continue shopping, <a href="{{ url_for('logout') }}">logout</a> ,
                         and add some.
                     </p>   
                 </div>                    
