@@ -42,12 +42,12 @@ def get_shops_data():
         try:
             shop_brand = node.tags['brand']
         except:
-            shop_brand = 'null'
+            shop_brand = 'Brand: None'
 
         try:
             shop_website = node.tags['website']
         except:
-            shop_website = 'null'
+            shop_website = 'Website: None'
 
         # Create the marker and its pop-up for each shop
         markers += "var {idd} = L.marker([{latitude}, {longitude}]);\
