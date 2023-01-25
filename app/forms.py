@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired, Length, EqualTo, Email, \
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 import phonenumbers
 from app.models import User
+from flask_pagedown.fields import PageDownField
 
 
 class LoginForm(FlaskForm):
@@ -114,7 +115,7 @@ class ProductsForSaleForm(FlaskForm):
         'Currency',
         choices=[('KES', 'KES')],
         validators=[DataRequired()])
-    description = TextAreaField(
+    description = PageDownField(
         'Product Description',
         validators=[DataRequired(), Length(1, 64)],
         render_kw={'placeholder': 'iPhone 13 Pro'})
@@ -123,5 +124,5 @@ class ProductsForSaleForm(FlaskForm):
         'Product Image',
         validators=[
         FileRequired(),
-        FileAllowed(['jpg', 'png', 'svg'])])
+        FileAllowed(['jpg', 'png', 'svg', 'jpeg'])])
     submit = SubmitField('Add')
