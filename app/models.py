@@ -5,6 +5,9 @@ from datetime import datetime
 import jwt
 from time import time
 from hashlib import md5
+import bleach
+from markdown import markdown
+from geoalchemy2 import Geometry
 
 
 @login.user_loader
@@ -24,6 +27,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(128))
     phone = db.Column(db.String(20), default='+254700111222')
     verification_phone = db.Column(db.String(20))
+    # location = db.Column(Geometry(geometry_type='POINT', srid=4326))
     registered_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 
@@ -75,7 +79,7 @@ class User(db.Model, UserMixin):
 
 class Vendor(User):
     id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True)
-    shop_name = db.Column(db.String(64), default='Sample eCommerce Shop')
+    shop_name = db.Column(db.String(64), default='Sample eCommerce Shop')    
     products_for_sale = db.relationship(
         'ProductsForSale', backref='vendor', lazy='dynamic', passive_deletes=True)
 
@@ -125,12 +129,25 @@ class ProductsForSale(db.Model):
     name = db.Column(db.String(64), default='iPhone 13', nullable=False)
     price = db.Column(db.Integer, default=0, nullable=False)
     currency = db.Column(db.String(20), default='KES', nullable=False)    
-    description = db.Column(db.String(64), default='iPhone 13', nullable=False)
+    description = db.Column(db.String(300), default='iPhone 13', nullable=False)
+    description_html = db.Column(db.String(300))
     quantity = db.Column(db.Integer, default=0, nullable=False)
     image = db.Column(db.String(64), default='static/images/vendor/uploads', nullable=False)
     allow_status = db.Column(db.Boolean, default=False)
     added_at = db.Column(db.DateTime, default=datetime.utcnow)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', ondelete='CASCADE'))
+
+    # new function
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+        'h1', 'h2', 'h3', 'p']
+        target.body_html = bleach.linkify(bleach.clean(
+        markdown(value, output_format='html'),
+        tags=allowed_tags, strip=True))
+
+db.event.listen(ProductsForSale.description, 'set', ProductsForSale.on_changed_body)
 
 
 class PurchasedProducts(db.Model): # should be PurchasedProduct()
