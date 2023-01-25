@@ -19,14 +19,14 @@
             </p>
         {% endif %}
     {% endblock %}
-    {% endif %}
+{% endif %}
 {% if current_user.is_anonymous %}
     {% block app_content %}
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ title }}</h1>
                 <p>
-                    <a href="{{ url_for('home') }}">Return to the home page</a>.
+                    <a href="{{ url_for('shop') }}">Return to the home page</a>.
                 </p>
             </div>  
         </div>
