@@ -33,3 +33,7 @@ class Config(object):
 
     # IP Info
     IP_INFO_ACCESS_TOKEN = os.environ.get('IP_INFO_ACCESS_TOKEN')
+
+    # Africa's talking API
+    AFRICASTALKING_API_KEY = os.environ.get('AFRICASTALKING_API_KEY')
+    AT_USERNAME = os.environ.get('AT_USERNAME')
