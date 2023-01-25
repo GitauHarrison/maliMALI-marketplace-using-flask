@@ -8,26 +8,22 @@
             <!-- Flash message -->
             {% include '_flash_message.html' %}
             <!-- End of flash message -->
-            <div class="text-center">
-                <h1 class="mb-4"><strong>Discounts Near You</strong>.</h1>
-                <!-- Search bar -->
-                <div class="p-1 bg-light rounded border rounded-pill shadow-sm mb-4" id="search">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <button id="button-addon2" type="submit" class="btn btn-link text-warning"><i class="fa fa-search"></i></button>
-                      </div>
-                      <input type="search" placeholder="Search for discounts near you" aria-describedby="button-addon2" class="form-control border-0 bg-light">
-                    </div>
-                </div>
-            </div>
 
-            {% if num_products > 0 %}
+            <!-- products -->
+            <h2 class="font-weight-bold mb-2">{{ title }}</h2>
+            <p class="text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+
+            <div>
+                <p>{{ vendors }}</p>
+                <p>{{ customer_location }}</p>
+            </div>
+            <!-- {% if num_products > 0 %}
             <div class="row pb-5 mb-4">
                 {% for product in products %}
                     {% if product %}
                         <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                            <!-- Card-->
-                            <div class="card rounded shadow-sm border-0 mt-4">
+                            Card -->
+                            <!-- <div class="card rounded shadow-sm border-0 mt-4">
                                 <div class="card-body p-4">
                                     <div id="zoom">
                                         <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
@@ -44,7 +40,7 @@
                     {% endif %}                        
                 {% endfor %}
             </div>
-            {% endif %}
+            {% endif %} -->
 
             {% if num_products < 1 %}
             <hr>

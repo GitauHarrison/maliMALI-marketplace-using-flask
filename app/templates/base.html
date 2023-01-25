@@ -9,11 +9,13 @@
     <!-- The title of our application is defined here -->
     {% block title %}
         {% if title %}
-            <title>{{ title }} - Shop</title>
+            <title>{{ title }} - Primashop</title>
         {% else %}
-            <title>Sample eCommerce App</title>
+            <title>Primashop</title>
         {% endif %}
     {% endblock %}
+
+    {{ pagedown.html_head() }}
 
     <!-- Bootstrap CSS CDN -->
     <link 
@@ -155,15 +157,18 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
 
-                    <a class="navbar-brand" href=" {{ url_for('shop') }} ">Sample eCommerce App</a>
+                    <a class="navbar-brand" href=" {{ url_for('shop') }} "><span class="shop-logo">PS</span> Primashop</a>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
+                            <!-- <li class="nav-item active">
+                                <a class="nav-link btn btn-light discount" href="{{ url_for('vendors_nearby') }}">Shops Near You</a>
+                            </li> -->
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ url_for('dashboard_customer_cart_items') }}">Cart</a>
+                                <a class="nav-link btn btn-light discount" href="{{ url_for('dashboard_customer_cart_items') }}">Cart</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('login') }}">Login</a>

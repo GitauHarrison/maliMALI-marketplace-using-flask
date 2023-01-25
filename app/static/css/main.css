@@ -10,9 +10,9 @@ body {
 
 p {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
+    font-size: 1.0em;
     font-weight: 300;
-    line-height: 1.7em;
+    line-height: 1.0em;
     /* color: #999; */
 }
 
@@ -239,6 +239,23 @@ h5 a {
     border: 1px solid #e7e7e7;
     border-radius: 10px;
 }
+.form-control:focus {
+  box-shadow: none;  
+}
+#search {
+    border-radius: 10px;
+    background-color: gray;
+}
+.form-control-underlined {
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-radius: 0;
+  padding-left: 0;
+}
+.form-control::placeholder {
+  font-size: 0.95rem;
+  color: #aaa;
+}
 
 
 /* ---------------------------------------------------
@@ -320,4 +337,30 @@ h5 a {
     height:100%;
     width:100%;
     position:absolute;
+}
+
+/* Logo */
+.shop-logo {
+    padding: 15px;
+    border-radius: 50%;
+    background-color: orange;
+}
+
+/* Cards */
+
+.card {
+    padding: 5px;
+}
+
+/* Images */
+.card .img-fluid {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+/* Discount */
+
+.discount {
+    box-shadow: #32325d40 0px 50px 100px -20px, #0000004d 0px 30px 60px -30px, #0a254059 0px -2px 6px 0px inset;
 }

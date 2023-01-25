@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, url_for, redirect, flash, session,\
-    request
+    request, jsonify
 from app.forms import LoginForm, VendorRegistrationForm, \
     CustomerRegistrationForm, AdminRegistrationForm, AddToCart,\
     ProductsForSaleForm
@@ -13,6 +13,9 @@ import requests
 from app import mpesa
 from app.ip_address import get_user_location
 from app.map import get_shops_data, get_shops
+from sqlalchemy import func
+from geoalchemy2 import Geometry
+from app.airtime import send_airtime
 
 
 @app.route('/dashboard/register/vendor', methods=['GET', 'POST'])
@@ -250,9 +253,43 @@ def shop():
     #print(items_in_cart[0]['product_id'])
     return render_template(
         'index.html',
-        title='From The Shop',
+        title='Home',
         products=products,
         num_products=num_products)
+
+
+# @app.route('/vendors/nearby/<customer_id>/<distance>')
+# @login_required
+# def get_nearby_vendors(customer_id, distance):
+#     customer = Customer.query.filter_by(id=customer_id).first()
+#     # user_location = get_user_location()
+#     if customer is None:
+#         flash("No customer with that ID was found")
+#         return redirect(url_for('shop'))
+#     else:
+#         customer_location = customer.location
+#         vendors = Vendor.query.filter(
+#             func.ST_DWithin(Vendor.location, customer_location, distance)).all()
+#         if not vendors:
+#             flash ("No vendors found near that customer")
+#             return redirect(url_for('shop'))
+#         else:
+#             vendor_list = []
+#             for vendor in vendors:
+#                 vendor_list.append({'name': vendor.name, 'location': vendor.location.data})
+#             return render_template(
+#                 'map.html',
+#                 vendors=vendor_list,
+#                 customer_location=customer.location.data)
+
+
+@app.route('/vendors/nearby')
+def vendors_nearby():
+    radius = 500
+    customer_location = Geometry('POINT(x y)', srid=4326)
+    nearby_vendors = Vendor.query.filter(
+        Vendor.location.ST_Distance_Sphere(customer_location) < radius).all()
+    return jsonify([vendor.to_dict() for vendor in nearby_vendors])
 
 
 @app.route('/dashboard/customer/purchase-history', methods=['GET', 'POST'])
@@ -417,6 +454,9 @@ def lipa_na_mpesa(id):
         product.payment_status = True
         db.session.commit()
         flash(f'{product.name} paid for.')
+
+        # Send airtime after purchase
+        send_airtime()
 
     except Exception as e:
         print(f'Error: \n\n {e}')    
