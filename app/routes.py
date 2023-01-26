@@ -13,9 +13,9 @@ import requests
 from app import mpesa
 from app.ip_address import get_user_location
 from app.map import get_shops_data, get_shops
-from sqlalchemy import func
 from geoalchemy2 import Geometry
 from app.airtime import send_airtime
+
 
 
 @app.route('/dashboard/register/vendor', methods=['GET', 'POST'])
@@ -215,7 +215,12 @@ def logout():
 # ===========
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+@app.route('/home')
+def home():
+    return render_template('landing_page.html', title='Home')
+
+
 @app.route('/shop', methods=['GET', 'POST'])
 def shop():
     """All products listed here"""
@@ -251,11 +256,49 @@ def shop():
         session.clear()
     num_products = len(products)
     #print(items_in_cart[0]['product_id'])
+
+
     return render_template(
         'index.html',
         title='Home',
         products=products,
         num_products=num_products)
+
+
+@app.route('/vendors')
+def vendors():
+    allvendors = Vendor.query.all()
+
+    # Get current user location
+    location = get_user_location()
+    lat = location.latitude
+    lng = location.longitude
+
+    # Convert into json
+    appvendors = jsonify(allvendors)
+    print('Status:', appvendors.status_code)
+
+    return appvendors
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')
+
+    location = get_user_location()
+    lat = location.latitude
+    lng = location.longitude
+
+    url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+    params = {
+        'location': f'{lat},{lng}',
+        'radius': 1000,
+        'keyword': query,
+        'key': app.config['GOOGLE_MAPS_API_KEY']
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+    return data
 
 
 # @app.route('/vendors/nearby/<customer_id>/<distance>')
@@ -335,7 +378,7 @@ def view_product(id):
 
     # Display map
     markers = get_shops_data()
-    print('Shops:', markers)
+    print('Shops:', markers.encode('utf-8'))
 
     my_shops = get_shops()
     print('My shops: ', my_shops)
@@ -426,7 +469,7 @@ def dashboard_customer_buy_product(id):
     return redirect(url_for('dashboard_customer_checkout'))
 
 
-@app.route('/product/<int:id>/lipa-na-mpesa>')
+@app.route('/product/<int:id>/lipa-na-mpesa')
 @login_required
 def lipa_na_mpesa(id):    
     access_token = mpesa.MpesaAccessToken.validated_mpesa_access_token
