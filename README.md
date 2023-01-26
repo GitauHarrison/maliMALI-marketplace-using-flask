@@ -44,6 +44,8 @@ Application users:
 
 - Admin
     - Creates the vendors after verifying their details
+    - Only an admin can add a vendor
+    - The assumption here is that the admin verifies the vendor before onboarding
 
 - Vendor:
     - Creates products he wants to sell
@@ -52,6 +54,21 @@ Application users:
     - Purchases products they want
 
 Majority of the functionality is developed to improve a customer's shopping experience. A customer can easily search for shops near him. The search query returns a list of vendors closest to him, adequately marked on the map. During checkout, a customer pays using the Lipa Na Mpesa service from Safaricom. Successful purchases sees that a customer receives free talking time top-up. This also happens to the vendor. The main objective is to appreciate both the vendor and the customer for using the platform.
+
+To test the live app, use these credentials (if you don't want to create your own):
+
+- Admin:
+    - Username: **harry**
+    - Password: **ecommerceapp123**
+
+- Vendor:
+    - Username: **tanya**
+    - Password: **ecommerceapp123**
+
+- Customer:
+    - Username: **taste**
+    - Password: **ecommerceapp123**
+
 
 ## Testing It Locally
 
