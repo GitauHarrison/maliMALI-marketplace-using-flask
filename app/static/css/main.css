@@ -212,10 +212,14 @@ h5 a {
 .allow {
     background-color: orange;
 }
+.allowed {
+    background-color: #82ec9c;
+    color: white;
+}
 .delete {
     background-color: red;
 }
-.allow, .delete {
+.allow, .allowed, .delete {
     color: white;
     padding-top: 2px;
     padding-bottom: 2px;
@@ -223,13 +227,13 @@ h5 a {
     padding-right: 3px;
     border-radius: 5px;
 }
-.allow:hover {
+.allow:hover, .allowed:hover {
     box-shadow: #807e0b33 0px 5px 15px;
 }
 .delete:hover {
     box-shadow: #8a280a33 0px 2px 8px 0px;
 }
-.allow:hover, .delete:hover {
+.allow:hover, .allowed:hover, .delete:hover {
     color: white;
     font-size: 25px;
 }
@@ -356,7 +360,7 @@ h5 a {
 }
 
 /* Images */
-.card .img-fluid {
+.card .img-fluid-index {
     width: 100%;
     height: 15vw;
     object-fit: cover;

@@ -37,3 +37,6 @@ class Config(object):
     # Africa's talking API
     AFRICASTALKING_API_KEY = os.environ.get('AFRICASTALKING_API_KEY')
     AT_USERNAME = os.environ.get('AT_USERNAME')
+
+    # Google maps
+    GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')

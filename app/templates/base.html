@@ -186,50 +186,53 @@
             <!-- Contents of all our pages will go here -->
             {% block app_content %}{% endblock %}
         </div>
-        <!-- Footer -->
-        <footer class="bg-dark bg-gradient text-dark">
-            <div class="container py-4">
-              <div class="row py-5">
-                <div class="col-md-4 mb-3 mb-md-0">
-                  <h6 class="text-uppercase mb-3">Customer services</h6>
-                  <ul class="list-unstyled mb-0">
-                    <li><a class="footer-link" href="#!">Help &amp; Contact Us</a></li>
-                    <li><a class="footer-link" href="#!">Returns &amp; Refunds</a></li>
-                    <li><a class="footer-link" href="#!">Online Stores</a></li>
-                    <li><a class="footer-link" href="#!">Terms &amp; Conditions</a></li>
-                  </ul>
+        
+        {% if current_user.is_anonymous %}
+            <!-- Footer -->
+            <footer class="bg-gradient text-dark" style="background-color: black;">
+                <div class="container py-4">
+                <div class="row py-5">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                    <h6 class="text-uppercase mb-3">Customer services</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li><a class="footer-link text-white" href="#!">Help &amp; Contact Us</a></li>
+                        <li><a class="footer-link text-white" href="#!">Returns &amp; Refunds</a></li>
+                        <li><a class="footer-link text-white" href="#!">Online Stores</a></li>
+                        <li><a class="footer-link text-white" href="#!">Terms &amp; Conditions</a></li>
+                    </ul>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                    <h6 class="text-uppercase mb-3">Company</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li><a class="footer-link text-white" href="#!">What We Do</a></li>
+                        <li><a class="footer-link text-white" href="#!">Available Services</a></li>
+                        <li><a class="footer-link text-white" href="#!">Latest Posts</a></li>
+                        <li><a class="footer-link text-white" href="#!">FAQs</a></li>
+                    </ul>
+                    </div>
+                    <div class="col-md-4">
+                    <h6 class="text-uppercase mb-3">Social media</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li><a class="footer-link text-white" href="#!">Twitter</a></li>
+                        <li><a class="footer-link text-white" href="#!">Instagram</a></li>
+                        <li><a class="footer-link text-white" href="#!">Tumblr</a></li>
+                        <li><a class="footer-link text-white" href="#!">Pinterest</a></li>
+                    </ul>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                  <h6 class="text-uppercase mb-3">Company</h6>
-                  <ul class="list-unstyled mb-0">
-                    <li><a class="footer-link" href="#!">What We Do</a></li>
-                    <li><a class="footer-link" href="#!">Available Services</a></li>
-                    <li><a class="footer-link" href="#!">Latest Posts</a></li>
-                    <li><a class="footer-link" href="#!">FAQs</a></li>
-                  </ul>
+                <div class="border-top pt-4" style="border-color: #1d1d1d !important">
+                    <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="small text-muted mb-0">&copy; {{ moment().format('YYYY') }} All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="small text-muted mb-0">&#128150; from <a class="text-white reset-anchor" href="#">Primashop</a></p>
+                    </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                  <h6 class="text-uppercase mb-3">Social media</h6>
-                  <ul class="list-unstyled mb-0">
-                    <li><a class="footer-link" href="#!">Twitter</a></li>
-                    <li><a class="footer-link" href="#!">Instagram</a></li>
-                    <li><a class="footer-link" href="#!">Tumblr</a></li>
-                    <li><a class="footer-link" href="#!">Pinterest</a></li>
-                  </ul>
                 </div>
-              </div>
-              <div class="border-top pt-4" style="border-color: #1d1d1d !important">
-                <div class="row">
-                  <div class="col-md-6 text-center text-md-start">
-                    <p class="small text-muted mb-0">&copy; {{ moment().format('YYYY') }} All rights reserved.</p>
-                  </div>
-                  <div class="col-md-6 text-center text-md-end">
-                    <p class="small text-muted mb-0">&#128150; from <a class="text-white reset-anchor" href="#">Primashop</a></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </footer>
+            </footer>
+        {% endif %}
     {% endblock %}
 
     {% block scripts %}
@@ -241,6 +244,9 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
         <!-- jQuery Custom Scroller CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        
+        <!-- Custom JS -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -277,20 +283,14 @@
         {{ moment.include_moment() }}
 
         <!-- Map -->
-        <script>
+        <!-- <script>
             var map = L.map('map').setView([{{lat}}, {{lon}}], 16);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'}).addTo(map);
             {{markers|safe}}
-        </script>
+        </script> -->
 
         <!-- Google maps API -->
-        <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
-        <script src="jquery.geocomplete.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places&sensor=false"></script>
-
-        {% block google_maps %}
-
-        {% endblock %}
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&libraries=places&callback=initMap">
 
         
 

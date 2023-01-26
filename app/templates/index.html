@@ -16,7 +16,8 @@
                       <div class="input-group-prepend">
                         <button id="button-addon2" type="submit" class="btn btn-link text-warning"><i class="fa fa-search"></i></button>
                       </div>
-                      <input type="search" placeholder="Search for discounts near you" aria-describedby="button-addon2" class="form-control border-0 bg-light">
+                      <input id="search-bar" type="text" placeholder="Search for discounts near you" aria-describedby="button-addon2" class="form-control border-0 bg-light">
+                      <div id="dropdown"></div>
                     </div>
                 </div>
             </div>
@@ -30,7 +31,7 @@
                             <div class="card rounded shadow-sm border-0 mt-4">
                                 <div class="card-body p-4">
                                     <div id="zoom">
-                                        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid d-block mx-auto mb-3">
+                                        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="img-fluid-index d-block mx-auto mb-3">
                                     </div>
                                     <hr>
                                     <h5><a href="{{ url_for('view_product', id=product.id) }}" class="text-dark">{{ product.name }}</a></h5>
