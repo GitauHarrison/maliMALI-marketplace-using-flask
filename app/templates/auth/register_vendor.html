@@ -4,7 +4,7 @@
 <!-- Only seen by admin -->
 {% if current_user.type == 'admin' %}
     {% block current_user_content %}
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-6">
                 <!-- Flash message -->
                 {% include '_flash_message.html' %}
