@@ -46,15 +46,15 @@
                                 </div>
                                 <hr>
                                 <!-- Start of map -->
-                                <div class="row mb-4">
+                                <!-- <div class="row mb-4"> -->
                                     <!-- Map showing shops near the customer -->
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                         <h3>Shops near you</h3>
                                         <div class="map-responsive">
                                             <div id="map">{{markers|safe}}</div>
                                         </div>`                               
-                                    </div>
-                                </div>
+                                    </div> -->
+                                <!-- </div> -->
                                 <!-- End of map -->
 
                             </div>
@@ -62,6 +62,22 @@
                     {% endif %}
                 {% endfor %}            
             </div>
+        {% endif %}
+
+        {% if num_cart_items > 0 %}
+            {% for item in cart_items  %}
+                {% if item.payment_status == False %}
+                    <div class="row pb-4 mb-4">
+                        <div class="col-lg-12 col-md-12 mb-2 mb-lg-0">
+                            <p>
+                                You have no items in the cart. 
+                                <a href="{{ url_for('shop') }}">Continue shopping</a> 
+                                and add some.
+                            </p>  
+                        </div>                    
+                    </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
 
         <!-- If there are no items in the cart -->
