@@ -1,3 +1,6 @@
+![GitHub Open Issues](https://img.shields.io/github/issues/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Closed Issues](https://img.shields.io/github/issues-closed/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Pull Request Open](https://img.shields.io/github/issues-pr/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Pull Request Closed](https://img.shields.io/github/issues-pr-closed/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub forks](https://img.shields.io/github/forks/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Stars](https://img.shields.io/github/stars/GitauHarrison/sample-ecommerce-app-using-flask)
+
+
 # Sample eCommerce App
 
 ![eCommerce App](/app/static/images/sample_ecommerce_app.gif)
@@ -114,3 +117,6 @@ To test the live app, use these credentials (if you don't want to create your ow
     ```
 
 - Check the application in your favourite browser by pasting http://127.0.0.1:5000.
+
+
+[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
