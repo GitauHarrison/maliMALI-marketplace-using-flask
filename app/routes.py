@@ -11,9 +11,9 @@ from werkzeug.utils import secure_filename
 import os
 import requests
 from app import mpesa
-from app.ip_address import get_user_location
-from app.map import get_shops_data, get_shops
-from geoalchemy2 import Geometry
+# from app.ip_address import get_user_location
+# from app.map import get_shops_data, get_shops
+# from geoalchemy2 import Geometry
 from app.airtime import send_airtime
 
 
@@ -265,40 +265,40 @@ def shop():
         num_products=num_products)
 
 
-@app.route('/vendors')
-def vendors():
-    allvendors = Vendor.query.all()
+# @app.route('/vendors')
+# def vendors():
+#     allvendors = Vendor.query.all()
 
-    # Get current user location
-    location = get_user_location()
-    lat = location.latitude
-    lng = location.longitude
+#     # Get current user location
+#     location = get_user_location()
+#     lat = location.latitude
+#     lng = location.longitude
 
-    # Convert into json
-    appvendors = jsonify(allvendors)
-    print('Status:', appvendors.status_code)
+#     # Convert into json
+#     appvendors = jsonify(allvendors)
+#     print('Status:', appvendors.status_code)
 
-    return appvendors
+#     return appvendors
 
 
-@app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('query')
+# @app.route('/search', methods=['GET'])
+# def search():
+#     query = request.args.get('query')
 
-    location = get_user_location()
-    lat = location.latitude
-    lng = location.longitude
+#     location = get_user_location()
+#     lat = location.latitude
+#     lng = location.longitude
 
-    url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-    params = {
-        'location': f'{lat},{lng}',
-        'radius': 1000,
-        'keyword': query,
-        'key': app.config['GOOGLE_MAPS_API_KEY']
-    }
-    response = requests.get(url, params=params)
-    data = response.json()
-    return data
+#     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+#     params = {
+#         'location': f'{lat},{lng}',
+#         'radius': 1000,
+#         'keyword': query,
+#         'key': app.config['GOOGLE_MAPS_API_KEY']
+#     }
+#     response = requests.get(url, params=params)
+#     data = response.json()
+#     return data
 
 
 # @app.route('/vendors/nearby/<customer_id>/<distance>')
@@ -326,13 +326,13 @@ def search():
 #                 customer_location=customer.location.data)
 
 
-@app.route('/vendors/nearby')
-def vendors_nearby():
-    radius = 500
-    customer_location = Geometry('POINT(x y)', srid=4326)
-    nearby_vendors = Vendor.query.filter(
-        Vendor.location.ST_Distance_Sphere(customer_location) < radius).all()
-    return jsonify([vendor.to_dict() for vendor in nearby_vendors])
+# @app.route('/vendors/nearby')
+# def vendors_nearby():
+#     radius = 500
+#     customer_location = Geometry('POINT(x y)', srid=4326)
+#     nearby_vendors = Vendor.query.filter(
+#         Vendor.location.ST_Distance_Sphere(customer_location) < radius).all()
+#     return jsonify([vendor.to_dict() for vendor in nearby_vendors])
 
 
 @app.route('/dashboard/customer/purchase-history', methods=['GET', 'POST'])
@@ -342,15 +342,13 @@ def dashboard_customer():
     paid_products = current_user.purchased_products.filter_by(payment_status=True).all()
 
     # User location coordinates
-    user_location = get_user_location()
-    latitude = user_location.latitude
-    longitude = user_location.longitude
+    # user_location = get_user_location()
+    # latitude = user_location.latitude
+    # longitude = user_location.longitude
 
     return render_template(
         'dashboard_customer.html',
         title='Purchase History',
-        latitude=latitude,
-        longitude=longitude,
         paid_products=paid_products)
 
 
@@ -371,26 +369,23 @@ def view_product(id):
         return redirect(url_for('shop'))
 
     # Get user location
-    location = get_user_location()
-    lat = location.latitude
-    lon = location.longitude
-    print(lat, ' , ', lon)
+    # location = get_user_location()
+    # lat = location.latitude
+    # lon = location.longitude
+    # print(lat, ' , ', lon)
 
-    # Display map
-    markers = get_shops_data()
-    print('Shops:', markers.encode('utf-8'))
+    # # Display map
+    # markers = get_shops_data()
+    # print('Shops:', markers.encode('utf-8'))
 
-    my_shops = get_shops()
-    print('My shops: ', my_shops)
+    # my_shops = get_shops()
+    # print('My shops: ', my_shops)
 
     return render_template(
         'product_customer.html',
         title='Product Details',
         product=product,
-        form=form,
-        markers=markers,
-        lat=lat,
-        lon=lon)
+        form=form)
 
 
 @app.route('/customer/cart-items')
@@ -406,21 +401,18 @@ def dashboard_customer_cart_items():
     num_cart_items = len(cart_items)
 
     # Get user location
-    location = get_user_location()
-    lat = location.latitude
-    lon = location.longitude
+    # location = get_user_location()
+    # lat = location.latitude
+    # lon = location.longitude
 
     # Display map
-    markers = get_shops_data()
+    # markers = get_shops_data()
 
     return render_template(
         'cart_items.html',
         title='Cart Items',
         cart_items=cart_items,
-        num_cart_items=num_cart_items,
-        markers=markers,
-        lat=lat,
-        lon=lon)
+        num_cart_items=num_cart_items)
 
 
 @app.route('/dashboard/customer/cart-item/<int:id>/delete')
@@ -440,21 +432,18 @@ def dashboard_customer_checkout():
     num_cart_items = len(cart_items)
 
     # Get user location
-    location = get_user_location()
-    lat = location.latitude
-    lon = location.longitude
+    # location = get_user_location()
+    # lat = location.latitude
+    # lon = location.longitude
 
-    # Display map
-    markers = get_shops_data()
+    # # Display map
+    # markers = get_shops_data()
 
     return render_template(
         'cart_items_checkout.html',
         title='Buy Your Items',
         cart_items=cart_items,
-        num_cart_items=num_cart_items,
-        markers=markers,
-        lat=lat,
-        lon=lon)
+        num_cart_items=num_cart_items)
 
 
 @app.route('/dashboard/customer/cart-item/<int:id>/buy')
