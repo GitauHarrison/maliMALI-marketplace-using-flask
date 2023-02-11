@@ -214,6 +214,10 @@ def logout():
 # CUSTOMER
 # ===========
 
+# List of products in cart
+
+my_cart_items = []
+
 
 @app.route('/')
 @app.route('/home')
@@ -232,6 +236,7 @@ def shop():
         if current_user.type == 'vendor':
             return redirect(url_for('dashboard_vendor'))
     products = ProductsForSale.query.filter_by(allow_status=True).all()
+    print(my_cart_items)
     try:
         if 'product' in session:
             # Get product details
@@ -365,7 +370,8 @@ def view_product(id):
     form = AddToCart()
     if form.validate_on_submit():
         add_product = {"product_id": product.id,"quantity": form.quantity.data}
-        session['product'] = add_product
+        # session['product'] = add_product
+        my_cart_items.append(add_product)
         return redirect(url_for('shop'))
 
     # Get user location
