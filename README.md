@@ -1,7 +1,7 @@
 ![GitHub Open Issues](https://img.shields.io/github/issues/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Closed Issues](https://img.shields.io/github/issues-closed/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Pull Request Open](https://img.shields.io/github/issues-pr/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Pull Request Closed](https://img.shields.io/github/issues-pr-closed/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub forks](https://img.shields.io/github/forks/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Stars](https://img.shields.io/github/stars/GitauHarrison/sample-ecommerce-app-using-flask)
 
 
-# maliMALI eCommerce App
+# maliMALI Marketplace
 
 ![eCommerce App](/app/static/images/sample_ecommerce_app.gif)
 
@@ -76,13 +76,13 @@ To test the live app, use these credentials (if you don't want to create your ow
 - Clone this repo:
 
     ```python
-    $ git clone git@github.com:GitauHarrison/maliMALI-eCommerce-app-using-flask.git
+    $ git clone git@github.com:GitauHarrison/maliMALI-marketplace-using-flask.git
     ```
 
 - Change directory into the cloned repo:
 
     ```python
-    $ cd maliMALI-eCommerce-app-using-flask
+    $ cd maliMALI-marketplace-using-flask
     ```
 
 - Create and activate a virtual environment
