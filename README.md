@@ -1,13 +1,13 @@
 ![GitHub Open Issues](https://img.shields.io/github/issues/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Closed Issues](https://img.shields.io/github/issues-closed/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Pull Request Open](https://img.shields.io/github/issues-pr/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Pull Request Closed](https://img.shields.io/github/issues-pr-closed/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub forks](https://img.shields.io/github/forks/GitauHarrison/sample-ecommerce-app-using-flask) ![GitHub Stars](https://img.shields.io/github/stars/GitauHarrison/sample-ecommerce-app-using-flask)
 
 
-# Sample eCommerce App
+# maliMALI eCommerce App
 
 ![eCommerce App](/app/static/images/sample_ecommerce_app.gif)
 
 ## Overview
 
-This is a basic eCommerce app. The main goal is to allow customers to shop for items near them at a discount. The application is able to know where a customer is located, and upon search, the customer can find vendors near him, and can take advantage of offers in his locality. Discounts vary depeding on location.
+This is a basic eCommerce app. Vendors can sell items on the platform while customers can shop for these items. Card and MPesa Payment integration is added to complete the purchase cycle. 
 
 ## Table of Contents
 
@@ -56,8 +56,6 @@ Application users:
 - Customer:
     - Purchases products they want
 
-Majority of the functionality is developed to improve a customer's shopping experience. A customer can easily search for shops near him. The search query returns a list of vendors closest to him, adequately marked on the map. During checkout, a customer pays using the Lipa Na Mpesa service from Safaricom. Successful purchases sees that a customer receives free talking time top-up. This also happens to the vendor. The main objective is to appreciate both the vendor and the customer for using the platform.
-
 To test the live app, use these credentials (if you don't want to create your own):
 
 - Admin:
@@ -78,13 +76,13 @@ To test the live app, use these credentials (if you don't want to create your ow
 - Clone this repo:
 
     ```python
-    $ git@github.com:GitauHarrison/sample-ecommerce-app-using-flask.git
+    $ git clone git@github.com:GitauHarrison/maliMALI-eCommerce-app-using-flask.git
     ```
 
 - Change directory into the cloned repo:
 
     ```python
-    $ cd sample-ecommerce-app-using-flask
+    $ cd maliMALI-eCommerce-app-using-flask
     ```
 
 - Create and activate a virtual environment
