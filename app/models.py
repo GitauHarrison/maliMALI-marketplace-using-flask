@@ -89,7 +89,7 @@ class Vendor(User):
     }
 
     def __repr__(self):
-        return f'Teacher: {self.first_name} | {self.course}'
+        return f'Vendor: {self.username} | {self.shop_name}'
 
 
 class Customer(User):
@@ -104,7 +104,7 @@ class Customer(User):
     }
 
     def __repr__(self):
-        return f'Parent: {self.first_name} | {self.residence}'
+        return f'Customer: {self.username} | {self.residence}'
 
 
 class Admin(User):
