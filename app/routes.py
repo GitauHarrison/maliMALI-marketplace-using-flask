@@ -1,6 +1,5 @@
-from app import app, db
 from flask import render_template, url_for, redirect, flash, session,\
-    request, jsonify
+    make_response
 from app.forms import LoginForm, VendorRegistrationForm, \
     CustomerRegistrationForm, AdminRegistrationForm, AddToCart,\
     ProductsForSaleForm
@@ -15,6 +14,7 @@ from app import mpesa
 # from app.map import get_shops_data, get_shops
 # from geoalchemy2 import Geometry
 from app.airtime import send_airtime
+from app import app, db
 
 
 
@@ -131,7 +131,13 @@ def login():
             return redirect(url_for('dashboard_vendor'))
         if current_user.type == 'customer':
             return redirect(url_for('dashboard_customer_checkout'))
-    return render_template('auth/login.html', title='Login', form=form)
+    # Cart items
+    num_cart_items = len(my_cart_items)
+    return render_template(
+        'auth/login.html',
+        title='Login',
+        form=form,
+        num_cart_items=num_cart_items)
 
 
 @app.route('/register/customer', methods=['GET', 'POST'])
@@ -236,11 +242,12 @@ def shop():
         if current_user.type == 'vendor':
             return redirect(url_for('dashboard_vendor'))
     products = ProductsForSale.query.filter_by(allow_status=True).all()
-    print(my_cart_items)
+
     try:
-        if 'product' in session:
+        num_cart_items = len(session['cart'])
+        if 'cart' in session:
             # Get product details
-            cart_product = ProductsForSale.query.get(session['product']['product_id'])
+            cart_product = ProductsForSale.query.get(session['cart']['product_id'])
 
             # Add product to db
             product_for_purchase = PurchasedProducts(
@@ -254,11 +261,12 @@ def shop():
                 vendor_id=cart_product.vendor_id)
             db.session.add(product_for_purchase)
             db.session.commit()
-            flash('Product added to cart. Continue shopping, otherise see cart to checkout.')
+            flash('Product added to cart. Continue shopping, otherwise see cart to checkout.')
             del session['product']
             return redirect(url_for('shop'))
     except:
         session.clear()
+        num_cart_items = 0
     num_products = len(products)
     #print(items_in_cart[0]['product_id'])
 
@@ -267,7 +275,8 @@ def shop():
         'index.html',
         title='Home',
         products=products,
-        num_products=num_products)
+        num_products=num_products,
+        num_cart_items=num_cart_items)
 
 
 # @app.route('/vendors')
@@ -369,9 +378,10 @@ def view_product(id):
     product = ProductsForSale.query.filter_by(id=id).first_or_404()
     form = AddToCart()
     if form.validate_on_submit():
-        add_product = {"product_id": product.id,"quantity": form.quantity.data}
-        # session['product'] = add_product
-        my_cart_items.append(add_product)
+        if 'cart' in session:
+            session['cart'] = []
+            add_product = {"product_id": product.id,"quantity": form.quantity.data}
+        session['cart'].append(add_product)
         return redirect(url_for('shop'))
 
     # Get user location
@@ -404,7 +414,7 @@ def dashboard_customer_cart_items():
         if current_user.type == 'vendor':
             return redirect(url_for('dashboard_vendor'))
     cart_items = PurchasedProducts.query.all()
-    num_cart_items = len(cart_items)
+    num_cart_items = len(my_cart_items)
 
     # Get user location
     # location = get_user_location()
